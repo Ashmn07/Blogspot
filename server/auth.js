@@ -68,11 +68,29 @@ router.get("/domains",requireLogin,(req,res) =>{
     return res.json({domains})
 })
 
+router.get("/documents",requireLogin,(req,res) =>{
+    const documents = req.user.documents
+    return res.json({documents})
+})
+
 router.put("/api/join",requireLogin,(req, res) =>{
     const {domainId} = req.body
     console.log(domainId)
     User.findByIdAndUpdate(req.user._id,{
         $push:{domains:domainId}
+    })
+    .then(result=>{
+        console.log(result)
+    })
+    .catch(err=>{
+        return res.status(422).json({error:err})
+    })
+})
+
+router.put("/api/joinDoc",requireLogin,(req, res) =>{
+    const {docId} = req.body
+    User.findByIdAndUpdate(req.user._id,{
+        $push:{documents:docId}
     })
     .then(result=>{
         console.log(result)

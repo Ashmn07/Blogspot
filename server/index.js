@@ -30,12 +30,10 @@ mongoose.connection.on("error",()=>{
     console.log("err connecting",err);
 })
 
-
-
 io.on('connection',socket=>{
-    socket.on("get-document",async documentId=>{
+    socket.on("get-document",async (documentId,user)=>{
         const document = await findOrCreateDocument(documentId)
-        socket.join(documentId);        // joining the room
+        socket.join(documentId); // joining the room   
         socket.emit("load-document",document.data)
 
         socket.on("send-changes",delta =>{

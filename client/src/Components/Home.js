@@ -6,10 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import domain from '../Domain';
+import domain from '../DomainData';
 import Button from '@material-ui/core/Button'
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import {useHistory} from 'react-router-dom'
+import {useHistory,Link} from 'react-router-dom'
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   joinButton:{
-    backgroundColor:'#ff1616'
+    backgroundColor:'#ff1616',
   },
   cardHeading:{
     padding: theme.spacing(2),
@@ -58,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Home() {
+
+function Home() {
   const classes = useStyles();
   const history = useHistory()
 
@@ -82,8 +84,6 @@ export default function Home() {
     const data = await res.json()
     setDomains(data.domains)
   }
-
-  useEffect(() => console.log(domains),[domains])
   
   async function joinDomain(id) {
     setDomains([...domains,id])
@@ -114,6 +114,11 @@ export default function Home() {
             Blogsite
           </Typography>
           <div className={classes.leftNav}>
+          <Link to="/domain" style={{textDecoration: 'none',color:'white'}}>
+            <Typography variant="h6" noWrap>
+              Domains
+              </Typography>
+            </Link>
             <Typography variant="h6" noWrap>
               Hi {user?.name}
             </Typography>
@@ -134,6 +139,7 @@ export default function Home() {
           {
             domain.map(d=>(
               <Grid item lg={4} md={6} xs={12} key={d.id}>
+                {domains?.includes(d.id)?
                 <Card>
                   <CardMedia
                     className={classes.media}
@@ -144,26 +150,26 @@ export default function Home() {
                     <Typography className={classes.cardHeading} variant="h5">
                       {d.name}
                     </Typography>
-                    {
-                    domains?.includes(d.id)?
+                    <Link to ={`/domain/${d.id}`} style={{ textDecoration: 'none' }}>
+                      <InfoOutlinedIcon/>
+                    </Link>
                     <Button className={classes.joinButton} disabled style={{color: "white"}}>
                     <Typography variant="body1" noWrap>Joined</Typography>
-                  </Button>
-                    :
-                    <Button onClick={()=>joinDomain(d.id)} className={classes.joinButton}>
-                      <Typography variant="body1" noWrap>Join</Typography>
                     </Button>
-                    }
-                  </div>
-                  <Typography className={classes.cardDesc} variant="subtitle2">
+                    </div>
+                    <Typography className={classes.cardDesc} variant="subtitle2">
                     {d.description}
                   </Typography>
-                </Card>
+                  </Card>
+                    :null     
+                }
               </Grid>
             ))
           }
         </Grid>
       </main>
     </div>
-  );
+  )
 }
+
+export default Home

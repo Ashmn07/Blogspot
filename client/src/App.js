@@ -4,6 +4,8 @@ import Signup from './Components/Signup';
 import Collab from './Components/Collab';
 import {BrowserRouter, Route, Switch, Redirect, useHistory} from 'react-router-dom'
 import Home from './Components/Home';
+import DomainDetails from './Components/DomainDetails';
+import Domains from './Components/Domains';
 
 function Routes(){
   const history = useHistory()
@@ -21,6 +23,8 @@ function Routes(){
     <Switch>
       <Route path="/login" component={Login} exact/>
       <Route path="/signup" component={Signup} exact/>
+      <Route path="/domain/:domainId" component={DomainDetails} exact/>
+      <Route path="/domain" component={Domains} exact/>
       <Route path="/collab" component={Collab} exact/>
       <Route path="/" component={Home} exact/>
       <Redirect to="/"/>
