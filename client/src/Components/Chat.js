@@ -30,36 +30,53 @@ function Chat({id}) {
         socket.emit("join-room", id)
     },[id, socket])
 
+    const sendMessage = (e) =>{
+        e.preventDefault()
+        socket.emit("send-message", message,localStorage.getItem("user"))
+        setMessage("")
+    }
+
     useEffect(() =>{
         if(socket == null) return
-        socket.on("receive-message",message=>{
-           display(message)          
+        socket.on("receive-message",(message,user)=>{
+            display(message,JSON.parse(user))          
         })
     },[id, socket])
 
 
-    const display = (message) => {
+    const display = (message,user) => {
         const mes = document.createElement("div")
+        const nameDiv = document.createElement("div")
+        nameDiv.textContent = user.name
+        mes.style.display="flex"
+        nameDiv.style.display="flex"
         mes.style.padding = '7px 10px'
-        mes.style.margin = "15px"
+        mes.style.margin = "5px 15px 15px 15px"
+        nameDiv.style.margin = "15px 15px 0 15px"
         mes.style.maxWidth="50%"
+        nameDiv.style.fontWeight="bold"
         mes.style.width="max-content"
         mes.style.height="auto"
         mes.style.wordWrap="break-word"
-        mes.style.backgroundColor="#141414"
-        mes.style.color = "white"
+        if(user._id !== JSON.parse(localStorage.getItem("user"))._id){
+            mes.style.backgroundColor="#141414"
+            mes.style.color = "white"
+            mes.style.alignSelf="flex-start"
+            nameDiv.style.alignSelf="flex-start"
+        }
+        else{
+            mes.style.backgroundColor="#4fc3f7"
+            mes.style.color = "#141414"  
+            mes.style.alignSelf="flex-end" 
+            nameDiv.style.alignSelf="flex-end" 
+        }
         mes.style.borderRadius = "10px"
         mes.textContent=message
+        document.querySelector(".messages").append(nameDiv)
         document.querySelector(".messages").append(mes)
         const chCont = document.querySelector(".message-container")
         const ch = chCont.scrollHeight
         chCont.scroll(0,ch)
-    }
-
-    const sendMessage = (e) =>{
-        e.preventDefault()
-        socket.emit("send-message", message)
-        setMessage("")
     }
 
     const styles = {
@@ -130,7 +147,7 @@ function Chat({id}) {
           </Tooltip>
         </div>
         <div className="message-container" style={styles.message_container}>
-          <div className="messages">
+          <div className="messages" style={{display:'flex',flexDirection:'column'}}>
             {/* <div style={{backgroundColor:"#ff1616"}}>
                     <p>{message}</p>
                 </div> */}

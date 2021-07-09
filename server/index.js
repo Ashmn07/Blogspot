@@ -46,9 +46,8 @@ io.on('connection',socket=>{
     })
     socket.on("join-room", async roomId => {
         socket.join(roomId)
-        socket.on("send-message", async (message) =>{
-            console.log(message)
-            io.in(roomId).emit("receive-message",message)
+        socket.on("send-message", async (message,user) =>{
+            io.in(roomId).emit("receive-message",message,user)
         })
     })
 })
