@@ -10,6 +10,7 @@ const io = require('socket.io')(PORT,{
 
 const Document = require('./Document')
 const User = require('./User')
+const Domain = require('./DomainModel')
 // const Chat = require('./Chat')
 
 // mongoose
@@ -52,7 +53,9 @@ io.on('connection',socket=>{
     })
 })
 
-app.get("/",(req,res)=>res.send("hello"))
+app.get("/",(req,res)=>{
+    
+})
 
 app.listen(8080,()=>{
     console.log("Server is running",8080);

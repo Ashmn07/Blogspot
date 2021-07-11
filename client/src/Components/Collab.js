@@ -32,6 +32,7 @@ function Collab({location}) {
             })
         })
     }
+
     return (
         <div style={{display:'flex',height: '100vh',width: '100vw'}}>
             <TextEditor id={location.state.roomId}/>

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router()
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
+const Domain = mongoose.model('Domain')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -76,14 +77,16 @@ router.get("/documents",requireLogin,(req,res) =>{
 router.put("/api/join",requireLogin,(req, res) =>{
     const {domainId} = req.body
     console.log(domainId)
-    User.findByIdAndUpdate(req.user._id,{
-        $push:{domains:domainId}
-    })
-    .then(result=>{
-        console.log(result)
-    })
-    .catch(err=>{
-        return res.status(422).json({error:err})
+    User.findByIdAndUpdate(req.user._id,{$push:{domains:domainId}},{new:true},(err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }
+        Domain.findOneAndUpdate({domainId:domainId},{$push:{users:req.user._id}},{new:true},(err,result)=>{
+            if(err){
+                return res.status(422).json({error:err})
+            }
+            console.log(result)
+        })
     })
 })
 

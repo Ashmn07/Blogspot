@@ -108,9 +108,11 @@ export default function Domains() {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" noWrap>
-            Blogsite
-          </Typography>
+          <Link to="/" style={{textDecoration: 'none',color:'white'}}>
+            <Typography variant="h6" noWrap>
+              Blogsite
+            </Typography>
+          </Link>
           <div className={classes.leftNav}>
             <Typography variant="h6" noWrap>
               Hi {user?.name}

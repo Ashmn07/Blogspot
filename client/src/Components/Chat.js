@@ -48,8 +48,6 @@ function Chat({id}) {
         const mes = document.createElement("div")
         const nameDiv = document.createElement("div")
         nameDiv.textContent = user.name
-        mes.style.display="flex"
-        nameDiv.style.display="flex"
         mes.style.padding = '7px 10px'
         mes.style.margin = "5px 15px 15px 15px"
         nameDiv.style.margin = "15px 15px 0 15px"
@@ -58,6 +56,7 @@ function Chat({id}) {
         mes.style.width="max-content"
         mes.style.height="auto"
         mes.style.wordWrap="break-word"
+        nameDiv.style.wordWrap="break-word"
         if(user._id !== JSON.parse(localStorage.getItem("user"))._id){
             mes.style.backgroundColor="#141414"
             mes.style.color = "white"

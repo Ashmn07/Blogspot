@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import domain from '../DomainData';
 import Button from '@material-ui/core/Button'
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {useHistory,Link} from 'react-router-dom'
@@ -84,22 +83,6 @@ function Home() {
     const data = await res.json()
     setDomains(data.domains)
   }
-  
-  async function joinDomain(id) {
-    setDomains([...domains,id])
-    const jwtToken = localStorage.getItem("jwt")
-    const res = await fetch('/api/join',{
-      method: 'put',
-      headers: {
-        "Content-Type":"application/json",
-        "Authorization":"Bearer "+ jwtToken
-      },
-      body:JSON.stringify({
-        domainId:id
-      })
-    })
-    fetchDomains()
-  }
 
   const logout = () => {
     localStorage.clear()
@@ -110,14 +93,16 @@ function Home() {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" noWrap>
-            Blogsite
-          </Typography>
+          <Link to="/" style={{textDecoration: 'none',color:'white'}}>
+            <Typography variant="h6" noWrap>
+              Blogsite
+            </Typography>
+          </Link>
           <div className={classes.leftNav}>
           <Link to="/domain" style={{textDecoration: 'none',color:'white'}}>
             <Typography variant="h6" noWrap>
               Domains
-              </Typography>
+             </Typography>
             </Link>
             <Typography variant="h6" noWrap>
               Hi {user?.name}
@@ -133,13 +118,12 @@ function Home() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography className={classes.heading} variant="h4">
-           Domains
+          Joined Domains
         </Typography>
         <Grid container spacing={4}>
           {
-            domain.map(d=>(
+            domains?.map(d=>(
               <Grid item lg={4} md={6} xs={12} key={d.id}>
-                {domains?.includes(d.id)?
                 <Card>
                   <CardMedia
                     className={classes.media}
@@ -150,7 +134,7 @@ function Home() {
                     <Typography className={classes.cardHeading} variant="h5">
                       {d.name}
                     </Typography>
-                    <Link to ={`/domain/${d.id}`} style={{ textDecoration: 'none' }}>
+                    <Link to ={`/domain/${d}`} style={{ textDecoration: 'none' }}>
                       <InfoOutlinedIcon/>
                     </Link>
                     <Button className={classes.joinButton} disabled style={{color: "white"}}>
@@ -161,9 +145,7 @@ function Home() {
                     {d.description}
                   </Typography>
                   </Card>
-                    :null     
-                }
-              </Grid>
+                 </Grid>
             ))
           }
         </Grid>
