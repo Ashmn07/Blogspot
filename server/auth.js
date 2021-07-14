@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router()
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
+const Document = mongoose.model('Document')
 const Domain = mongoose.model('Domain')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -64,9 +65,23 @@ router.post('/login',(req,res)=>{
     .catch(err =>console.log(err))
 })
 
+router.get("/allDomains",requireLogin,(req, res)=>{
+    Domain.find()
+    .then(domains =>{console.log(domains)})
+})
+
 router.get("/domains",requireLogin,(req,res) =>{
     const domains = req.user.domains
     return res.json({domains})
+})
+
+router.put("/domainDetails",requireLogin,(req,res)=>{
+    const {domainId} = req.body
+    Domain.find({domainId: domainId})
+    .populate({path:'users',select:'_id name email'})
+    .then(result =>{
+        res.json({user:result[0].users})
+    })
 })
 
 router.get("/documents",requireLogin,(req,res) =>{
@@ -74,9 +89,22 @@ router.get("/documents",requireLogin,(req,res) =>{
     return res.json({documents})
 })
 
+router.put("/documentIds",requireLogin,(req,res) =>{
+    const {docId} = req.body
+    Document.findById(docId).then(res => {
+        if(res){
+            console.log(true)
+            return true;
+        }
+        else{
+            console.log(false)
+            return false;
+        }
+    })
+})
+
 router.put("/api/join",requireLogin,(req, res) =>{
     const {domainId} = req.body
-    console.log(domainId)
     User.findByIdAndUpdate(req.user._id,{$push:{domains:domainId}},{new:true},(err,result)=>{
         if(err){
             return res.status(422).json({error:err})
@@ -92,14 +120,16 @@ router.put("/api/join",requireLogin,(req, res) =>{
 
 router.put("/api/joinDoc",requireLogin,(req, res) =>{
     const {docId} = req.body
-    User.findByIdAndUpdate(req.user._id,{
-        $push:{documents:docId}
-    })
-    .then(result=>{
-        console.log(result)
-    })
-    .catch(err=>{
-        return res.status(422).json({error:err})
+    User.findByIdAndUpdate(req.user._id,{$push:{documents:docId}},{new:true},(err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})            
+        }
+        Document.findByIdAndUpdate(docId,{$push:{users:req.user._id}},{new:true},(err,result)=>{
+            if(err){
+                return res.status(422).json({error:err})  
+            }
+            console.log(result)
+        })
     })
 })
 

@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Switch, Redirect, useHistory} from 'react-router-d
 import Home from './Components/Home';
 import DomainDetails from './Components/DomainDetails';
 import Domains from './Components/Domains';
+import Documents from './Components/Documents';
 
 function Routes(){
   const history = useHistory()
@@ -25,6 +26,7 @@ function Routes(){
       <Route path="/signup" component={Signup} exact/>
       <Route path="/domain/:domainId" component={DomainDetails} exact/>
       <Route path="/domain" component={Domains} exact/>
+      <Route path="/documents" component={Documents} exact/>
       <Route path="/collab" component={Collab} exact/>
       <Route path="/" component={Home} exact/>
       <Redirect to="/"/>

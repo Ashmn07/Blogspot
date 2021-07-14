@@ -64,14 +64,15 @@ function Home() {
   const history = useHistory()
 
   const [user, setUser] = useState()
+  const [userDomains, setUserDomains] = useState()
   const [domains, setDomains] = useState()
 
   useEffect(() =>{
     setUser(JSON.parse(localStorage.getItem("user")))   
-    fetchDomains()
+    fetchUserDomains()
   },[])
 
-  const fetchDomains = async() => {
+  const fetchUserDomains = async() => {
     const jwtToken = localStorage.getItem("jwt")
     const res = await fetch('/domains',{
       method: 'get',
@@ -81,7 +82,7 @@ function Home() {
       }
     })
     const data = await res.json()
-    setDomains(data.domains)
+    setUserDomains(data.domains)
   }
 
   const logout = () => {
@@ -122,7 +123,7 @@ function Home() {
         </Typography>
         <Grid container spacing={4}>
           {
-            domains?.map(d=>(
+            userDomains?.map(d=>(
               <Grid item lg={4} md={6} xs={12} key={d.id}>
                 <Card>
                   <CardMedia
@@ -140,12 +141,12 @@ function Home() {
                     <Button className={classes.joinButton} disabled style={{color: "white"}}>
                     <Typography variant="body1" noWrap>Joined</Typography>
                     </Button>
-                    </div>
-                    <Typography className={classes.cardDesc} variant="subtitle2">
+                  </div>
+                  <Typography className={classes.cardDesc} variant="subtitle2">
                     {d.description}
                   </Typography>
-                  </Card>
-                 </Grid>
+                </Card>
+              </Grid>
             ))
           }
         </Grid>

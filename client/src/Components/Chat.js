@@ -3,15 +3,12 @@ import {io} from 'socket.io-client'
 import Button from '@material-ui/core/Button'
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Tooltip from '@material-ui/core/Tooltip'
-
-// const user = {
-//     name:"tom",
-//     id:'2'
-// }
+import {useHistory} from 'react-router-dom'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 function Chat({id}) {
 
-    console.log(id)
+    const history = useHistory()
 
     const [message,setMessage] = useState('');
     const [socket, setSocket] = useState();
@@ -64,7 +61,7 @@ function Chat({id}) {
             nameDiv.style.alignSelf="flex-start"
         }
         else{
-            mes.style.backgroundColor="#4fc3f7"
+            mes.style.backgroundColor="white"
             mes.style.color = "#141414"  
             mes.style.alignSelf="flex-end" 
             nameDiv.style.alignSelf="flex-end" 
@@ -80,21 +77,15 @@ function Chat({id}) {
 
     const styles = {
         message_container:{
-            // marginTop: '10px',
-            // marginLeft: '20px',
             overflowY: 'scroll',
-            // overflowX:'hidden',
             flex:'1',
         },
         chat__container: {
             flex:'1',
             display:'flex',
-            // position: 'sticky',
-            // top:0,
             flexDirection:'column',
             justifyContent: 'space-between',
             height:'100%',
-            // maxHeight: '100vh',
             width: '33vw'
         },
         form:{
@@ -128,12 +119,16 @@ function Chat({id}) {
             color:"#141414",
             marginRight:'10px',
             cursor: 'pointer',
+        },
+        chat__buttons:{
+          display:'flex'
         }
     }
     return (
       <div className="chat__container" style={styles.chat__container}>
         <div style={styles.chat__header}>
           <h3 style={styles.chat__headertext}>Chat</h3>
+          <div style={styles.chat__buttons}>
           <Tooltip title="Copy Room Code">
           <Button
             style={styles.chat__shareButton}
@@ -144,6 +139,15 @@ function Chat({id}) {
             <FileCopyIcon/>
           </Button>
           </Tooltip>
+          <Tooltip title="Exit Room">
+          <Button
+            style={styles.chat__shareButton}
+            onClick={()=>history.push('/')}
+          >
+            <ExitToAppIcon/>
+          </Button>
+          </Tooltip>
+          </div>
         </div>
         <div className="message-container" style={styles.message_container}>
           <div className="messages" style={{display:'flex',flexDirection:'column'}}>

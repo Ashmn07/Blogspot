@@ -6,6 +6,10 @@ const User = new Schema({
   password:String,
   domains:Array,
   documents:Array
+  // [{ 
+  //   type:Schema.Types.ObjectId,
+  //   ref:"Document"
+  // }]
 })
 
 module.exports = model("User", User)

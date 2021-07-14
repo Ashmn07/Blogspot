@@ -5,7 +5,10 @@ const Domain = new Schema({
   description: String,
   domainName: String,
   domainPic: String,
-  users: Array
+  users: [{
+      type:Schema.Types.ObjectId,
+      ref:"User"
+  }]
 })
 
 module.exports = model("Domain", Domain)
