@@ -32,8 +32,8 @@ mongoose.connection.on("error",()=>{
 })
 
 io.on('connection',socket=>{
-    socket.on("get-document",async (documentId,user)=>{
-        const document = await findOrCreateDocument(documentId)
+    socket.on("get-document",async (documentId,user,name)=>{
+        const document = await findOrCreateDocument(documentId,name)
         socket.join(documentId); // joining the room   
         socket.emit("load-document",document.data)
 
@@ -61,10 +61,10 @@ app.listen(8080,()=>{
     console.log("Server is running",8080);
 })
 
-async function findOrCreateDocument(id) {
+async function findOrCreateDocument(id,name) {
     if (id == null) return
   
     const document = await Document.findById(id)
     if (document) return document
-    return await Document.create({ _id: id, data: "" })
+    return await Document.create({ _id: id,name: name,data: "" })
 }

@@ -4,7 +4,10 @@ const User = new Schema({
   name:String,
   email:String,
   password:String,
-  domains:Array,
+  domains:[{ 
+    type:Schema.Types.ObjectId,
+    ref:"Domain"
+  }],
   documents:Array
   // [{ 
   //   type:Schema.Types.ObjectId,

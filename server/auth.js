@@ -67,12 +67,23 @@ router.post('/login',(req,res)=>{
 
 router.get("/allDomains",requireLogin,(req, res)=>{
     Domain.find()
-    .then(domains =>{console.log(domains)})
+    .then(domains => res.json({domains}))
 })
 
-router.get("/domains",requireLogin,(req,res) =>{
+router.get("/userDomains",requireLogin,(req,res) =>{
+    User.findById(req.user._id)
+    // .populate('domains')
+    .then(result => console.log(result))
     const domains = req.user.domains
     return res.json({domains})
+})
+
+router.get("/userDomainsDetails",requireLogin,(req,res) =>{
+    User.findById(req.user._id)
+    .populate({path:'domains',select:'domainName _id description domainPic'})
+    .then(result => {
+        res.json(result.domains)
+    })
 })
 
 router.put("/domainDetails",requireLogin,(req,res)=>{
@@ -85,31 +96,34 @@ router.put("/domainDetails",requireLogin,(req,res)=>{
 })
 
 router.get("/documents",requireLogin,(req,res) =>{
-    const documents = req.user.documents
-    return res.json({documents})
+    // const documents = req.user.documents
+    // return res.json({documents})
+    Document.find({users:req.user._id})
+    .then(documents => res.json({documents}))
 })
 
 router.put("/documentIds",requireLogin,(req,res) =>{
     const {docId} = req.body
-    Document.findById(docId).then(res => {
-        if(res){
+    Document.findById(docId).then(resp => {
+        if(resp){
             console.log(true)
-            return true;
+            return res.json(true);
         }
         else{
             console.log(false)
-            return false;
+            return res.json(false);
         }
     })
 })
 
 router.put("/api/join",requireLogin,(req, res) =>{
     const {domainId} = req.body
+    console.log(req.body)
     User.findByIdAndUpdate(req.user._id,{$push:{domains:domainId}},{new:true},(err,result)=>{
         if(err){
             return res.status(422).json({error:err})
         }
-        Domain.findOneAndUpdate({domainId:domainId},{$push:{users:req.user._id}},{new:true},(err,result)=>{
+        Domain.findByIdAndUpdate(domainId,{$push:{users:req.user._id}},{new:true},(err,result)=>{
             if(err){
                 return res.status(422).json({error:err})
             }

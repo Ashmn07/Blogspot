@@ -74,7 +74,7 @@ function Home() {
 
   const fetchUserDomains = async() => {
     const jwtToken = localStorage.getItem("jwt")
-    const res = await fetch('/domains',{
+    const res = await fetch('/userDomainsDetails',{
       method: 'get',
       headers: {
         "Content-Type":"application/json",
@@ -82,7 +82,8 @@ function Home() {
       }
     })
     const data = await res.json()
-    setUserDomains(data.domains)
+    console.log(data)
+    setUserDomains(data)
   }
 
   const logout = () => {
@@ -128,12 +129,12 @@ function Home() {
                 <Card>
                   <CardMedia
                     className={classes.media}
-                    image={d.image}
-                    title={d.name}
+                    image={d.domainPic}
+                    title={d.domainName}
                   />
                   <div className={classes.cardContent}>
                     <Typography className={classes.cardHeading} variant="h5">
-                      {d.name}
+                      {d.domainName}
                     </Typography>
                     <Link to ={`/domain/${d}`} style={{ textDecoration: 'none' }}>
                       <InfoOutlinedIcon/>

@@ -24,7 +24,7 @@ const TOOLBAR = [
   ["clean"],
 ];
 
-function TextEditor({id}) {
+function TextEditor({id,name}) {
   const [socket, setSocket] = useState()
   const [quill, setQuill] = useState()
 
@@ -47,7 +47,7 @@ function TextEditor({id}) {
       quill.enable()      // allows user to edit. If not given it does not allow user to edit.
     })
     const user = localStorage.getItem("user") 
-    socket.emit("get-document",id,user) //passing documentId to backend so that it fetches data frm backend or creates new one
+    socket.emit("get-document",id,user,name) //passing documentId to backend so that it fetches data frm backend or creates new one
   },[socket,quill,id])
 
   // saving data to database after an interval of every 2 seconds

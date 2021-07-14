@@ -35,17 +35,19 @@ function DomainDetails({match}) {
     console.log(match)
     const user = localStorage.getItem('user');
     const [enterCode,setEnterCode] = useState(false)
+    const [enterName,setEnterName] = useState(false)
     const [joinCode,setJoinCode] = useState('')
+    const [roomName,setRoomName] = useState('')
     const history = useHistory()
     const roomId = v4()
     const createRoom = (e) => {
         e.preventDefault()
-        history.push('/collab',{roomId: roomId})
+        history.push('/collab',{roomId: roomId,name:roomName})
     }
     const joinRoom = (e) => {
         e.preventDefault()
         const docCheck = async() => {
-            return await fetch('/domainDetails',{
+          await fetch('/documentIds',{
                 method: 'put',
                 headers: {
                   "Content-Type":"application/json",
@@ -55,13 +57,14 @@ function DomainDetails({match}) {
                     docId:joinCode
                 })
             })
+            .then(res => res.json())
+            .then(res => {
+              if(res){
+                history.push('/collab',{roomId: joinCode})
+              }
+            })
         }
-        if(docCheck()===true){
-        history.push('/collab',{roomId: joinCode})
-        }
-        else{
-            
-        }
+        docCheck()
     }
 
     const fetchDomainDetails = async() => {
@@ -146,7 +149,7 @@ function DomainDetails({match}) {
             <Button
               color="secondary"
               variant="outlined"
-              onClick={createRoom}
+              onClick={() => setEnterName(true)}
               style={{ marginLeft: "20px", marginRight: "20px" }}
             >
               <Typography variant="h6">Create Room</Typography>
@@ -169,6 +172,24 @@ function DomainDetails({match}) {
                 </Button>
               </div>
             ) : null}
+            {enterName?
+            (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <FormControl>
+                  <InputLabel htmlFor="Room Code">Enter Room Code</InputLabel>
+                  <Input
+                    id="room-code"
+                    value={roomName}
+                    onChange={(e) => setRoomName(e.target.value)}
+                    aria-describedby="my-helper-text"
+                  />
+                </FormControl>
+                <Button color="secondary" variant="primary" onClick={createRoom}>
+                  <Typography variant="h6">Join</Typography>
+                </Button>
+              </div>
+            ) : null
+            }
           </div>
         </div>
       </div>

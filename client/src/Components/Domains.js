@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import domain from '../DomainData';
 import Button from '@material-ui/core/Button'
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {useHistory,Link} from 'react-router-dom'
@@ -65,15 +64,30 @@ export default function Domains() {
 
   const [user, setUser] = useState()
   const [domains, setDomains] = useState()
+  const [userDomains, setUserDomains] = useState()
 
   useEffect(() =>{
-    setUser(JSON.parse(localStorage.getItem("user")))   
+    setUser(JSON.parse(localStorage.getItem("user"))) 
+    fetchUserDomains()  
     fetchDomains()
   },[])
 
+  const fetchUserDomains = async() => {
+    const res = await fetch('/userDomains',{
+      method:'get',
+      headers: {
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+ localStorage.getItem("jwt")
+      }
+    })
+    const data = await res.json()
+    setUserDomains(data.domains)
+    console.log(data.domains)
+  }
+
   const fetchDomains = async() => {
     const jwtToken = localStorage.getItem("jwt")
-    const res = await fetch('/domains',{
+    const res = await fetch('/allDomains',{
       method: 'get',
       headers: {
         "Content-Type":"application/json",
@@ -84,8 +98,8 @@ export default function Domains() {
     setDomains(data.domains)
   }
   
-  async function joinDomain(id) {
-    setDomains([...domains,id])
+  async function joinDomain(d) {
+    setUserDomains([...userDomains,d._id])
     const jwtToken = localStorage.getItem("jwt")
     const res = await fetch('/api/join',{
       method: 'put',
@@ -94,7 +108,7 @@ export default function Domains() {
         "Authorization":"Bearer "+ jwtToken
       },
       body:JSON.stringify({
-        domainId:id
+        domainId:d._id
       })
     })
   }
@@ -132,22 +146,22 @@ export default function Domains() {
         </Typography>
         <Grid container spacing={4}>
           {
-            domain.map(d=>(
+            domains?.map(d=>(
               <Grid item lg={4} md={6} xs={12} key={d.id}>
                 <Card>
                   <CardMedia
                     className={classes.media}
-                    image={d.image}
-                    title={d.name}
+                    image={d.domainPic}
+                    title={d.domainName}
                   />
                   <div className={classes.cardContent}>
                     <Typography className={classes.cardHeading} variant="h5">
-                      {d.name}
+                      {d.domainName}
                     </Typography>
                     {
-                    domains?.includes(d.id)?
+                    userDomains?.includes(d._id)?
                     <div>
-                    <Link to ={`/domain/${d.id}`} style={{ textDecoration: 'none' }}>
+                    <Link to ={`/domain/${d._id}`} style={{ textDecoration: 'none' }}>
                       <InfoOutlinedIcon/>
                     </Link>
                     <Button className={classes.joinButton} disabled style={{color: "white"}}>
@@ -155,7 +169,7 @@ export default function Domains() {
                   </Button>
                   </div>
                     :
-                    <Button onClick={()=>joinDomain(d.id)} className={classes.joinButton}>
+                    <Button onClick={()=>joinDomain(d)} className={classes.joinButton}>
                       <Typography variant="body1" noWrap>Join</Typography>
                     </Button>
                     }

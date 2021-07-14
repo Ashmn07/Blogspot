@@ -119,11 +119,12 @@ function Documents() {
         <Typography className={classes.heading} variant="h4">
            Domains
         </Typography>
+        {  console.log(documents)}
         <Grid container spacing={4}>
           {
             documents?.map(d=>(
               <Grid item lg={4} md={6} xs={12} key={d.id}>
-                  <h1>Yooo</h1>
+                  <h1>{d.name || "temp"}</h1>
               </Grid>
             ))
           }
