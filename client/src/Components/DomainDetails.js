@@ -12,9 +12,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
   media: {
     height: 180,
   },
@@ -32,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
 function DomainDetails({match}) {
 
     const classes = useStyles();
-    console.log(match)
     const user = localStorage.getItem('user');
     const [enterCode,setEnterCode] = useState(false)
     const [enterName,setEnterName] = useState(false)
     const [joinCode,setJoinCode] = useState('')
     const [roomName,setRoomName] = useState('')
+    const [joinedUsers,setjoinedUsers] = useState()
     const history = useHistory()
     const roomId = v4()
     const createRoom = (e) => {
@@ -79,12 +76,16 @@ function DomainDetails({match}) {
             })
         })
         const data = await result.json()
-        console.log(data)
+        setjoinedUsers(data.users)
     }
 
     useEffect(() =>{
         fetchDomainDetails()
     },[])
+
+    useEffect(() =>{
+        console.log(joinedUsers)
+    },[joinedUsers])
 
     const logout = () => {
       localStorage.clear();
@@ -93,34 +94,31 @@ function DomainDetails({match}) {
     
     
     return (
-      <div className={classes.root}>
-        <AppBar position="fixed">
+      <div>
+       <AppBar position="relative">
           <Toolbar className={classes.toolbar}>
-            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            <Link to="/" style={{textDecoration: 'none',color:'white'}}>
               <Typography variant="h6" noWrap>
                 Blogsite
               </Typography>
             </Link>
             <div className={classes.leftNav}>
-              <Link
-                to="/domain"
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                <Typography variant="h6" noWrap>
-                  Domains
-                </Typography>
-              </Link>
+            <Link to="/domain" style={{textDecoration: 'none',color:'white'}}>
               <Typography variant="h6" noWrap>
-                Hi {user?.name}
+                Domains
               </Typography>
-              <Button
-                style={{ color: "white", paddingLeft: "3vw" }}
-                onClick={logout}
-              >
-                <ExitToAppIcon />
-                <Typography variant="body1" noWrap>
-                  Logout
-                </Typography>
+             </Link>
+            <Link to="/documents" style={{textDecoration: 'none',color:'white'}}>
+              <Typography variant="h6" noWrap>
+                Documents
+              </Typography>
+             </Link>
+             <Typography variant="h6" noWrap>
+               Hi {user?.name}
+              </Typography>
+              <Button style={{color: "white",paddingLeft:'3vw'}} onClick={logout}>
+                <ExitToAppIcon/>
+                <Typography variant="body1" noWrap>Logout</Typography>
               </Button>
             </div>
           </Toolbar>
@@ -128,7 +126,6 @@ function DomainDetails({match}) {
         <div
           style={{
             display: "flex",
-            // flexDirection: "column",
             justifyContent: 'space-between',
             alignItems: "center",
             paddingTop: "80px",
@@ -142,14 +139,21 @@ function DomainDetails({match}) {
             <Button
               color="primary"
               variant="outlined"
-              onClick={() => setEnterCode(true)}
+              onClick={() => {
+                setEnterCode(true)
+                setEnterName(false)
+              }
+              }
             >
               <Typography variant="h6">Join Room</Typography>
             </Button>
             <Button
               color="secondary"
               variant="outlined"
-              onClick={() => setEnterName(true)}
+              onClick={() => {
+                setEnterName(true) 
+                setEnterCode(false)
+              }}
               style={{ marginLeft: "20px", marginRight: "20px" }}
             >
               <Typography variant="h6">Create Room</Typography>
@@ -158,7 +162,7 @@ function DomainDetails({match}) {
           <div>
             {enterCode ? (
               <div style={{ display: "flex", alignItems: "center" }}>
-                <FormControl>
+                <FormControl required={true}>
                   <InputLabel htmlFor="Room Code">Enter Room Code</InputLabel>
                   <Input
                     id="room-code"
@@ -176,17 +180,18 @@ function DomainDetails({match}) {
             (
               <div style={{ display: "flex", alignItems: "center" }}>
                 <FormControl>
-                  <InputLabel htmlFor="Room Code">Enter Room Code</InputLabel>
+                  <InputLabel htmlFor="Document Name">Enter Document Name</InputLabel>
                   <Input
-                    id="room-code"
+                    id="doc-name"
                     value={roomName}
+                    required={true}
                     onChange={(e) => setRoomName(e.target.value)}
                     aria-describedby="my-helper-text"
                   />
+                  <Button color="secondary" variant="primary" onClick={createRoom}>
+                    <Typography variant="h6">Create</Typography>
+                  </Button>
                 </FormControl>
-                <Button color="secondary" variant="primary" onClick={createRoom}>
-                  <Typography variant="h6">Join</Typography>
-                </Button>
               </div>
             ) : null
             }

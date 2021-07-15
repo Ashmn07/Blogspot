@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(2),
   },
   cardContent:{
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     // fontSize: '1.4rem'
   },
   heading:{
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(2),
     padding: theme.spacing(1.5),
     fontWeight:'bold',
     // textAlign: 'center'
@@ -117,7 +116,7 @@ function Documents() {
         <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography className={classes.heading} variant="h4">
-           Domains
+           Documents
         </Typography>
         {  console.log(documents)}
         <Grid container spacing={4}>

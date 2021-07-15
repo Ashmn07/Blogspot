@@ -88,10 +88,11 @@ router.get("/userDomainsDetails",requireLogin,(req,res) =>{
 
 router.put("/domainDetails",requireLogin,(req,res)=>{
     const {domainId} = req.body
-    Domain.find({domainId: domainId})
+    Domain.findById(domainId)
     .populate({path:'users',select:'_id name email'})
     .then(result =>{
-        res.json({user:result[0].users})
+        console.log(result)
+        res.json({users:result.users})
     })
 })
 

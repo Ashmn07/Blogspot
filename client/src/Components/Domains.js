@@ -12,9 +12,6 @@ import {useHistory,Link} from 'react-router-dom'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
   media: {
     height: 180,
   },
@@ -29,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(2),
   },
   cardContent:{
@@ -47,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     // fontSize: '1.4rem'
   },
   heading:{
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(2),
     padding: theme.spacing(1.5),
     fontWeight:'bold',
     // textAlign: 'center'
@@ -119,25 +115,35 @@ export default function Domains() {
   }
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed">
-        <Toolbar className={classes.toolbar}>
-          <Link to="/" style={{textDecoration: 'none',color:'white'}}>
-            <Typography variant="h6" noWrap>
-              Blogsite
-            </Typography>
-          </Link>
-          <div className={classes.leftNav}>
-            <Typography variant="h6" noWrap>
-              Hi {user?.name}
-            </Typography>
-            <Button style={{color: "white",paddingLeft:'3vw'}} onClick={logout}>
-              <ExitToAppIcon/>
-              <Typography variant="body1" noWrap>Logout</Typography>
-            </Button>
-          </div>
-        </Toolbar>
-      </AppBar>
+    <div >
+      <AppBar position="relative">
+          <Toolbar className={classes.toolbar}>
+            <Link to="/" style={{textDecoration: 'none',color:'white'}}>
+              <Typography variant="h6" noWrap>
+                Blogsite
+              </Typography>
+            </Link>
+            <div className={classes.leftNav}>
+            <Link to="/domain" style={{textDecoration: 'none',color:'white'}}>
+              <Typography variant="h6" noWrap>
+                Domains
+              </Typography>
+             </Link>
+            <Link to="/documents" style={{textDecoration: 'none',color:'white'}}>
+              <Typography variant="h6" noWrap>
+                Documents
+              </Typography>
+             </Link>
+             <Typography variant="h6" noWrap>
+               Hi {user?.name}
+              </Typography>
+              <Button style={{color: "white",paddingLeft:'3vw'}} onClick={logout}>
+                <ExitToAppIcon/>
+                <Typography variant="body1" noWrap>Logout</Typography>
+              </Button>
+            </div>
+          </Toolbar>
+        </AppBar>
     
       <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -161,7 +167,8 @@ export default function Domains() {
                     {
                     userDomains?.includes(d._id)?
                     <div>
-                    <Link to ={`/domain/${d._id}`} style={{ textDecoration: 'none' }}>
+                      {console.log(d._id)}
+                    <Link to ={`/domain/${d._id.toString()}`} style={{ textDecoration: 'none' }}>
                       <InfoOutlinedIcon/>
                     </Link>
                     <Button className={classes.joinButton} disabled style={{color: "white"}}>
