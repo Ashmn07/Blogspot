@@ -20,9 +20,18 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     backgroundColor: "#ff1616",
   },
-  leftNav: {
-    display: "flex",
-    width: "max-content",
+  Logo:{
+    marginRight:theme.spacing(6),
+    fontfamily: 'Shadows Into Light'
+  },
+  navItems:{
+    textDecoration: 'none',
+    color:'white',
+    margin:theme.spacing(1.5)
+  },
+  partNav:{
+    display:'flex',
+    alignItems: 'center',
   },
 }));
 
@@ -97,26 +106,32 @@ function DomainDetails({match}) {
       <div>
        <AppBar position="relative">
           <Toolbar className={classes.toolbar}>
-            <Link to="/" style={{textDecoration: 'none',color:'white'}}>
+            <div className={classes.partNav}>
+              <div className={classes.Logo}>
+                <Link to="/" className={classes.navItems}>
+                  <Typography variant="h5" noWrap>
+                    Blogsite
+                  </Typography>
+                </Link>
+              </div>
+            <Link to="/" className={classes.navItems}>
               <Typography variant="h6" noWrap>
-                Blogsite
+                Home
               </Typography>
-            </Link>
-            <div className={classes.leftNav}>
-            <Link to="/domain" style={{textDecoration: 'none',color:'white'}}>
+             </Link>
+            <Link to="/domain" className={classes.navItems}>
               <Typography variant="h6" noWrap>
                 Domains
               </Typography>
              </Link>
-            <Link to="/documents" style={{textDecoration: 'none',color:'white'}}>
+            <Link to="/documents" className={classes.navItems}>
               <Typography variant="h6" noWrap>
                 Documents
               </Typography>
              </Link>
-             <Typography variant="h6" noWrap>
-               Hi {user?.name}
-              </Typography>
-              <Button style={{color: "white",paddingLeft:'3vw'}} onClick={logout}>
+             </div>
+            <div className={classes.partNav}>
+              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
                 <ExitToAppIcon/>
                 <Typography variant="body1" noWrap>Logout</Typography>
               </Button>
@@ -162,7 +177,7 @@ function DomainDetails({match}) {
           <div>
             {enterCode ? (
               <div style={{ display: "flex", alignItems: "center" }}>
-                <FormControl required={true}>
+                <FormControl>
                   <InputLabel htmlFor="Room Code">Enter Room Code</InputLabel>
                   <Input
                     id="room-code"
@@ -184,11 +199,10 @@ function DomainDetails({match}) {
                   <Input
                     id="doc-name"
                     value={roomName}
-                    required={true}
                     onChange={(e) => setRoomName(e.target.value)}
                     aria-describedby="my-helper-text"
                   />
-                  <Button color="secondary" variant="primary" onClick={createRoom}>
+                  <Button color="secondary" variant="primary" disabled={roomName===""?true:false} onClick={createRoom}>
                     <Typography variant="h6">Create</Typography>
                   </Button>
                 </FormControl>
