@@ -129,7 +129,8 @@ function Chat({id}) {
         },
         chat__buttons:{
           display:'flex'
-        }
+        },
+        
     }
     return (
       <div className="chat__container" style={styles.chat__container}>

@@ -7,11 +7,9 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import {useHistory,Link} from 'react-router-dom'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import TextEditor from './TextEditor'
-import Chat from './Chat'
 
 const useStyles = makeStyles((theme) => ({
   toolbar:{
@@ -60,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
     alignItems: 'center',
   },
+  cardFooter:{
+    display:'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding:theme.spacing(2)
+  }
 }));
 
 function Documents() {
@@ -138,7 +142,20 @@ function Documents() {
           {
             documents?.map(d=>(
               <Grid item lg={4} md={6} xs={12} key={d.id}>
-                  <h1>{d.name || "temp"}</h1>
+                  {/* <h1>{d.name || "temp"}</h1> */}
+                  <Card>
+                    <CardContent>
+                      <Typography variant="h4">
+                        {d.name || "temp"}
+                      </Typography>
+                    </CardContent>
+                    <CardActions className={classes.cardFooter}>
+                      <Typography variant="body1">
+                        {d.users.length || 0}{d.users.length!==1?" Collaborators":" Collaborator"} 
+                      </Typography>
+                      <Button size="small" style={{backgroundColor:"#ff1616",color:'white'}}>Edit </Button>
+                    </CardActions>
+                  </Card>
               </Grid>
             ))
           }
