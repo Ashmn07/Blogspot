@@ -4,6 +4,9 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import {Link,useHistory} from 'react-router-dom'
 import { v4 } from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,6 +36,39 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
     alignItems: 'center',
   },
+  domainContent:{
+    padding:theme.spacing(4)
+  },
+  buttonActions:{ 
+    display: "flex",
+    margin:theme.spacing(2)
+   },
+   collabheading:{
+     margin:theme.spacing(2)
+   },
+   collabButtons:{
+     display:'flex',
+     margin:theme.spacing(2)
+   },
+   collabContainer:{
+     display:'flex',
+     flexDirection:'column',
+     padding:theme.spacing(2)
+    },
+    domainContainer:{
+      display:'flex',
+      justifyContent:'space-between',
+      margin:theme.spacing(2),
+    },
+    domainContentItem:{
+      margin:theme.spacing(2)
+    },
+    userDetails:{
+      display:'flex',
+      flexDirection: 'column',
+      margin:theme.spacing(3),
+      padding: theme.spacing(3)
+    }
 }));
 
 function DomainDetails({match}) {
@@ -43,7 +79,7 @@ function DomainDetails({match}) {
     const [enterName,setEnterName] = useState(false)
     const [joinCode,setJoinCode] = useState('')
     const [roomName,setRoomName] = useState('')
-    const [joinedUsers,setjoinedUsers] = useState()
+    const [domainDetails,setDomainDetails] = useState()
     const history = useHistory()
     const roomId = v4()
     const createRoom = (e) => {
@@ -85,22 +121,23 @@ function DomainDetails({match}) {
             })
         })
         const data = await result.json()
-        setjoinedUsers(data.users)
+        console.log(data.domain)
+        setDomainDetails(data.domain)
     }
 
     useEffect(() =>{
         fetchDomainDetails()
     },[])
 
-    useEffect(() =>{
-        console.log(joinedUsers)
-    },[joinedUsers])
-
     const logout = () => {
       localStorage.clear();
       history.push("/login");
     };
     
+    const mailClickHandler = (e,email) => {
+      e.preventDefault()
+      window.open(`mailto:${email}`)
+    }
     
     return (
       <div>
@@ -138,19 +175,23 @@ function DomainDetails({match}) {
             </div>
           </Toolbar>
         </AppBar>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: 'space-between',
-            alignItems: "center",
-            paddingTop: "80px",
-            width: "100%",
-          }}
-        >
-        <div>
-            <h1>Domains</h1>
-        </div>
-          <div style={{ display: "flex", marginBottom: "20px" }}>
+        <div className={classes.domainContainer}>
+          <div className={classes.domainContent}>
+            <Typography variant="h3" className={classes.domainContentItem}>
+              {domainDetails?.domainName}
+            </Typography>
+            <Typography variant="h5" className={classes.domainContentItem}>
+              {"Members : "}{domainDetails?.users.length}
+            </Typography>
+            <Typography variant="h6" className={classes.domainContentItem}>
+              {domainDetails?.description}
+            </Typography>
+            </div>
+          <div className={classes.collabContainer}>
+            <Typography variant="h4" className={classes.collabheading}>
+              Collaborate
+            </Typography>
+            <div className={classes.collabButtons}>
             <Button
               color="primary"
               variant="outlined"
@@ -173,10 +214,10 @@ function DomainDetails({match}) {
             >
               <Typography variant="h6">Create Room</Typography>
             </Button>
-          </div>
-          <div>
+            </div>
+            <div className={classes.buttonActions}>
             {enterCode ? (
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <>
                 <FormControl>
                   <InputLabel htmlFor="Room Code">Enter Room Code</InputLabel>
                   <Input
@@ -189,11 +230,11 @@ function DomainDetails({match}) {
                 <Button color="secondary" variant="primary" onClick={joinRoom}>
                   <Typography variant="h6">Join</Typography>
                 </Button>
-              </div>
+              </>
             ) : null}
             {enterName?
             (
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <>
                 <FormControl>
                   <InputLabel htmlFor="Document Name">Enter Document Name</InputLabel>
                   <Input
@@ -202,15 +243,37 @@ function DomainDetails({match}) {
                     onChange={(e) => setRoomName(e.target.value)}
                     aria-describedby="my-helper-text"
                   />
-                  <Button color="secondary" variant="primary" disabled={roomName===""?true:false} onClick={createRoom}>
+                </FormControl>
+                <Button color="secondary" variant="primary" disabled={roomName===""?true:false} onClick={createRoom}>
                     <Typography variant="h6">Create</Typography>
                   </Button>
-                </FormControl>
-              </div>
+              </>
             ) : null
             }
           </div>
+          </div>
         </div>
+        <div className={classes.userDetails}>
+          <Typography variant="h4">
+            Members List      
+          </Typography>
+            {
+              domainDetails?.users.map(user => (
+                <Card style={{width:'max-content',margin:'20px',minWidth:'45vw'}}>
+                  <CardContent>
+                      <Typography variant="h5">
+                        {user.name}
+                      </Typography>
+                    </CardContent>
+                    <CardActions style={{display:'flex',justifyContent:'flex-end'}}>
+                      <Button size="small" 
+                      style={{backgroundColor:"#ff1616",color:'white',margin:'5px'}}
+                      onClick={(e) => mailClickHandler(e,user.email)}>Contact </Button>
+                    </CardActions>
+                </Card>
+              ))
+            }
+          </div>
       </div>
     );
 }

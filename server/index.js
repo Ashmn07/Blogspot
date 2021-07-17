@@ -31,6 +31,7 @@ mongoose.connection.on("error",()=>{
     console.log("err connecting",err);
 })
 
+
 io.on('connection',socket=>{
     socket.on("get-document",async (documentId,user,name)=>{
         const document = await findOrCreateDocument(documentId,name)

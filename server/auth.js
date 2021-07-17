@@ -91,8 +91,7 @@ router.put("/domainDetails",requireLogin,(req,res)=>{
     Domain.findById(domainId)
     .populate({path:'users',select:'_id name email'})
     .then(result =>{
-        console.log(result)
-        res.json({users:result.users})
+        res.json({domain:result})
     })
 })
 

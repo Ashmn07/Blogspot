@@ -153,7 +153,7 @@ function Documents() {
                       <Typography variant="body1">
                         {d.users.length || 0}{d.users.length!==1?" Collaborators":" Collaborator"} 
                       </Typography>
-                      <Button size="small" style={{backgroundColor:"#ff1616",color:'white'}}>Edit </Button>
+                      <Button size="small" style={{backgroundColor:"#ff1616",color:'white'}} onClick={()=>history.push('/collab',{roomId: d._id})}>Edit </Button>
                     </CardActions>
                   </Card>
               </Grid>
