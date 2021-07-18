@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar:{
     display:'flex',
     justifyContent:'space-between',
-    backgroundColor: "#ff1616",
+    backgroundColor: "#66bfbf",
   },
   content: {
     flexGrow: 1,
@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   joinButton:{
-    backgroundColor:'#ff1616',
+    backgroundColor:'#66bfbf',
+    color:"black"
   },
   cardHeading:{
     padding: theme.spacing(2),
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   navItems:{
     textDecoration: 'none',
-    color:'white',
+    color:'black',
     margin:theme.spacing(1.5)
   },
   partNav:{
@@ -152,7 +153,7 @@ export default function Domains() {
              </Link>
              </div>
             <div className={classes.partNav}>
-              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
+              <Button style={{color: "black",margin:'7px'}} onClick={logout}>
                 <ExitToAppIcon/>
                 <Typography variant="body1" noWrap>Logout</Typography>
               </Button>

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar:{
     display:'flex',
     justifyContent:'space-between',
-    backgroundColor: "#ff1616",
+    backgroundColor: "#66bfbf",
   },
   content: {
     flexGrow: 1,
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   navItems:{
     textDecoration: 'none',
-    color:'white',
+    color:'black',
     margin:theme.spacing(1.5)
   },
   partNav:{
@@ -125,7 +125,7 @@ function Documents() {
              </Link>
              </div>
             <div className={classes.partNav}>
-              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
+              <Button style={{color: "black",margin:'7px'}} onClick={logout}>
                 <ExitToAppIcon/>
                 <Typography variant="body1" noWrap>Logout</Typography>
               </Button>
@@ -153,7 +153,7 @@ function Documents() {
                       <Typography variant="body1">
                         {d.users.length || 0}{d.users.length!==1?" Collaborators":" Collaborator"} 
                       </Typography>
-                      <Button size="small" style={{backgroundColor:"#ff1616",color:'white'}} onClick={()=>history.push('/collab',{roomId: d._id})}>Edit </Button>
+                      <Button size="small" style={{backgroundColor:"#117a8b",color:'white'}} onClick={()=>history.push('/collab',{roomId: d._id})}>Edit </Button>
                     </CardActions>
                   </Card>
               </Grid>

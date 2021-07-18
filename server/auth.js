@@ -96,8 +96,6 @@ router.put("/domainDetails",requireLogin,(req,res)=>{
 })
 
 router.get("/documents",requireLogin,(req,res) =>{
-    // const documents = req.user.documents
-    // return res.json({documents})
     Document.find({users:req.user._id})
     .then(documents => res.json({documents}))
 })

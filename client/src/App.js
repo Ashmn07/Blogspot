@@ -7,6 +7,7 @@ import Home from './Components/Home';
 import DomainDetails from './Components/DomainDetails';
 import Domains from './Components/Domains';
 import Documents from './Components/Documents';
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 function Routes(){
   const history = useHistory()
@@ -36,13 +37,26 @@ function Routes(){
 
 function App() {
  
+  const theme = createMuiTheme({
+    typography: {
+      h3: {
+        fontFamily: '"Montserrat", Open Sans',
+      },
+      h5: {
+        fontFamily: '"Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", "sans-serif"'
+      }
+    },
+  });
+
   return (
     <div className="App">
       {/* <TextEditor/>
       <Chat/> */}
-      <BrowserRouter>
-        <Routes/>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes/>
+        </BrowserRouter>
+      </ThemeProvider>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -21,54 +22,67 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
-    backgroundColor: "#ff1616",
+    backgroundColor: "#66bfbf",
   },
-  Logo:{
-    marginRight:theme.spacing(6),
-    fontfamily: 'Shadows Into Light'
+  Logo: {
+    marginRight: theme.spacing(6),
+    fontfamily: "Shadows Into Light",
   },
-  navItems:{
-    textDecoration: 'none',
-    color:'white',
-    margin:theme.spacing(1.5)
+  navItems: {
+    textDecoration: "none",
+    color: "black",
+    margin: theme.spacing(1.5),
   },
-  partNav:{
-    display:'flex',
-    alignItems: 'center',
-  },
-  domainContent:{
-    padding:theme.spacing(4)
-  },
-  buttonActions:{ 
+  partNav: {
     display: "flex",
-    margin:theme.spacing(2)
-   },
-   collabheading:{
-     margin:theme.spacing(2)
-   },
-   collabButtons:{
-     display:'flex',
-     margin:theme.spacing(2)
-   },
-   collabContainer:{
-     display:'flex',
-     flexDirection:'column',
-     padding:theme.spacing(2)
-    },
-    domainContainer:{
-      display:'flex',
-      justifyContent:'space-between',
-      margin:theme.spacing(2),
-    },
-    domainContentItem:{
-      margin:theme.spacing(2)
-    },
-    userDetails:{
-      display:'flex',
-      flexDirection: 'column',
-      margin:theme.spacing(3),
-      padding: theme.spacing(3)
-    }
+    alignItems: "center",
+    color: "black",
+  },
+  domainContent: {
+    padding: theme.spacing(4),
+  },
+  buttonActions: {
+    display: "flex",
+    margin: theme.spacing(2),
+  },
+  collabheading: {
+    margin: theme.spacing(2),
+  },
+  collabButtons: {
+    display: "flex",
+    margin: theme.spacing(2),
+  },
+  collabContainer: {
+    display: "flex",
+    flexDirection: "column",
+    padding: theme.spacing(2),
+  },
+  domainContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: theme.spacing(2),
+    color:'white',
+    height: "70vh",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+  domainContentItem: {
+    margin: theme.spacing(2),
+  },
+  userDetails: {
+    display: "flex",
+    flexDirection: "column",
+    margin: theme.spacing(3),
+    padding: theme.spacing(3),
+  },
+  bgUrl:{
+    background: `url(https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmxvZyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80)`,
+    height: "70vh",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  }
 }));
 
 function DomainDetails({match}) {
@@ -168,14 +182,14 @@ function DomainDetails({match}) {
              </Link>
              </div>
             <div className={classes.partNav}>
-              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
+              <Button style={{color: "black",margin:'7px'}} onClick={logout}>
                 <ExitToAppIcon/>
                 <Typography variant="body1" noWrap>Logout</Typography>
               </Button>
             </div>
           </Toolbar>
         </AppBar>
-        <div className={classes.domainContainer}>
+        <div className={classes.domainContainer} style={{background:`url(${domainDetails?.domainPic})`, backgroundPosition: "center",backgroundRepeat: "no-repeat",backgroundSize: "cover",}}>
           <div className={classes.domainContent}>
             <Typography variant="h3" className={classes.domainContentItem}>
               {domainDetails?.domainName}
@@ -259,17 +273,13 @@ function DomainDetails({match}) {
           </Typography>
             {
               domainDetails?.users.map(user => (
-                <Card style={{width:'max-content',margin:'20px',minWidth:'45vw'}}>
-                  <CardContent>
+                <Card style={{width:'max-content',margin:'10px',minWidth:'20vw'}}>
+                  <CardContent style={{display:'flex',justifyContent:'space-between'}}>
                       <Typography variant="h5">
                         {user.name}
                       </Typography>
+                      <ContactMailIcon fontSize="large" onClick={(e) => mailClickHandler(e,user.email)} style={{cursor:'pointer',color:'#ff1616'}}/>
                     </CardContent>
-                    <CardActions style={{display:'flex',justifyContent:'flex-end'}}>
-                      <Button size="small" 
-                      style={{backgroundColor:"#ff1616",color:'white',margin:'5px'}}
-                      onClick={(e) => mailClickHandler(e,user.email)}>Contact </Button>
-                    </CardActions>
                 </Card>
               ))
             }

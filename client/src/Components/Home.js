@@ -15,52 +15,85 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 180,
   },
-  toolbar:{
-    display:'flex',
-    justifyContent:'space-between',
-    backgroundColor: "#ff1616",
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+    backgroundColor: "#66bfbf",
+    paddingTop:theme.spacing(3),
+    paddingRight:theme.spacing(3),
+    paddingLeft:theme.spacing(3)
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(2),
     // backgroundColor:'white'
   },
-  cardContent:{
-    display: 'flex',
-    justifyContent:'space-between',
-    width: '95%',
-    alignItems: 'center',
+  cardContent: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "95%",
+    alignItems: "center",
   },
-  joinButton:{
-    backgroundColor:'#ff1616',
+  joinButton: {
+    backgroundColor: "#66bfbf ",
+    color: "black"
   },
-  cardHeading:{
+  cardHeading: {
     padding: theme.spacing(2),
-    fontWeight:'600',
+    fontWeight: "600",
     // fontSize: '1.4rem'
   },
-  heading:{
+  heading: {
     paddingTop: theme.spacing(2),
     padding: theme.spacing(1.5),
-    fontWeight:'bold',
+    fontWeight: "bold",
     // textAlign: 'center'
   },
   cardDesc: {
     paddingTop: 0,
-    padding: theme.spacing(2), 
+    padding: theme.spacing(2),
   },
-  Logo:{
-    marginRight:theme.spacing(6),
-    fontfamily: 'Shadows Into Light'
+  Logo: {
+    marginRight: theme.spacing(6),
+    fontfamily: "Shadows Into Light",
   },
-  navItems:{
-    textDecoration: 'none',
-    color:'white',
-    margin:theme.spacing(1.5)
+  navItems: {
+    textDecoration: "none",
+    color: '#141414',
+    margin: theme.spacing(1.5),
   },
-  partNav:{
-    display:'flex',
-    alignItems: 'center',
+  partNav: {
+    display: "flex",
+    alignItems: "center",
+    paddingTop:theme.spacing(0.5),
+    paddingLeft: theme.spacing(15),
+    paddingRight: theme.spacing(15)
+  },
+  bannerPic: {
+    //https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1067&q=80
+    //https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHdyaXRpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60
+    //background: `url(https://images.unsplash.com/photo-1604993775742-c165463c4841?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80)`,
+    // backgroundColor: '#000000',
+    // backgroundImage: 'linear-gradient(147deg, #000000 0%, #434343 74%)',
+    backgroundColor: '#66bfbf',
+    height: "95vh",
+    // backgroundPosition: "center",
+    // backgroundRepeat: "no-repeat",
+    // backgroundSize: "cover",
+  },
+  bannerContent: {
+    paddingTop: theme.spacing(5),
+    paddingLeft: theme.spacing(15),
+    maxWidth: "50vw",
+    color: "black",
+  },
+  bannerDesc: {
+    padding: theme.spacing(1.5),
+  },
+  bannerButton: {
+    backgroundColor: "#117a8b",
+    color: "white",
+    margin: theme.spacing(2),
   },
 }));
 
@@ -99,12 +132,12 @@ function Home() {
 
   return (
     <div>
-      <AppBar position="relative">
+      <AppBar position="relative" style={{boxShadow:'none'}}>
           <Toolbar className={classes.toolbar}>
             <div className={classes.partNav}>
               <div className={classes.Logo}>
                 <Link to="/" className={classes.navItems}>
-                  <Typography variant="h5" noWrap>
+                  <Typography variant="h4" noWrap>
                     Blogsite
                   </Typography>
                 </Link>
@@ -126,16 +159,30 @@ function Home() {
              </Link>
              </div>
             <div className={classes.partNav}>
-              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
+              <Button style={{color: "black",margin:'7px'}} onClick={logout}>
                 <ExitToAppIcon/>
                 <Typography variant="body1" noWrap>Logout</Typography>
               </Button>
             </div>
           </Toolbar>
         </AppBar>
+
+      <div className={classes.bannerPic}>
+        <div className={classes.bannerContent}>
+          <Typography variant="h3" className={classes.heading}>
+            Interested in writing Blogs ?
+          </Typography>
+          <Typography variant="h5" className={classes.bannerDesc}>
+            Join communities and find other people with similar minded interests and collaborate with them by creating a room and sharing the code to the other interested people. All the joined collaborators can edit the text editor and also communicate with each other using the chat section
+          </Typography>
+          <Button variant="contained" className={classes.bannerButton}>View Communities</Button>
+        </div>
+        <div className={classes.bannercontentpic}>
+
+        </div>
+      </div>
     
       <main className={classes.content}>
-        <div className={classes.toolbar} />
         <Typography className={classes.heading} variant="h4">
           Joined Domains
         </Typography>
@@ -156,7 +203,7 @@ function Home() {
                     <Link to ={`/domain/${d._id}`} style={{ textDecoration: 'none' }}>
                       <InfoOutlinedIcon/>
                     </Link>
-                    <Button className={classes.joinButton} disabled style={{color: "white"}}>
+                    <Button className={classes.joinButton} disabled style={{color: "black"}}>
                     <Typography variant="body1" noWrap>Joined</Typography>
                     </Button>
                   </div>
