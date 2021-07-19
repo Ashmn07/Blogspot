@@ -18,11 +18,13 @@ const useStyles = makeStyles((theme) => ({
   toolbar:{
     display:'flex',
     justifyContent:'space-between',
-    backgroundColor: "#66bfbf",
+    backgroundColor: "#35281E",
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(2),
+    paddingTop:theme.spacing(10),
+    backgroundColor: '#F9E4B7'
   },
   cardContent:{
     display: 'flex',
@@ -31,12 +33,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   joinButton:{
-    backgroundColor:'#66bfbf',
-    color:"black"
+    backgroundColor:'#35281E',
+    color:"white"
   },
   cardHeading:{
     padding: theme.spacing(2),
     fontWeight:'600',
+    color:'black'
     // fontSize: '1.4rem'
   },
   heading:{
@@ -55,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   navItems:{
     textDecoration: 'none',
-    color:'black',
+    color:'white',
     margin:theme.spacing(1.5)
   },
   partNav:{
@@ -126,7 +129,7 @@ export default function Domains() {
 
   return (
     <div >
-      <AppBar position="relative">
+      <AppBar >
           <Toolbar className={classes.toolbar}>
             <div className={classes.partNav}>
               <div className={classes.Logo}>
@@ -153,7 +156,7 @@ export default function Domains() {
              </Link>
              </div>
             <div className={classes.partNav}>
-              <Button style={{color: "black",margin:'7px'}} onClick={logout}>
+              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
                 <ExitToAppIcon/>
                 <Typography variant="body1" noWrap>Logout</Typography>
               </Button>
@@ -170,27 +173,29 @@ export default function Domains() {
           {
             domains?.map(d=>(
               <Grid item lg={4} md={6} xs={12} key={d.id}>
-                <Card>
+                <Card style={{backgroundColor:"white"}}>
                   <CardMedia
                     className={classes.media}
                     image={d.domainPic}
                     title={d.domainName}
                   />
                   <div className={classes.cardContent}>
-                    <Typography className={classes.cardHeading} variant="h5">
-                      {d.domainName}
-                    </Typography>
+                    <Link to ={`/domain/${d._id.toString()}`} style={{ textDecoration: 'none', color: 'black'}}>
+                      <Typography className={classes.cardHeading} variant="h5">
+                        {d.domainName}
+                      </Typography>
+                    </Link>
                     {
                     userDomains?.includes(d._id)?
-                    <div>
+                    <>
                       {console.log(d._id)}
-                    <Link to ={`/domain/${d._id.toString()}`} style={{ textDecoration: 'none' }}>
-                      <InfoOutlinedIcon/>
-                    </Link>
+                    {/* <Link to ={`/domain/${d._id.toString()}`} style={{ textDecoration: 'none' }}>
+                    
+                    </Link> */}
                     <Button className={classes.joinButton} disabled style={{color: "white"}}>
-                    <Typography variant="body1" noWrap>Joined</Typography>
+                    <Typography variant="body1" noWrap style={{color: 'white'}}>Joined</Typography>
                   </Button>
-                  </div>
+                  </>
                     :
                     <Button onClick={()=>joinDomain(d)} className={classes.joinButton}>
                       <Typography variant="body1" noWrap>Join</Typography>

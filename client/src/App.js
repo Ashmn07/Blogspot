@@ -44,6 +44,9 @@ function App() {
       },
       h5: {
         fontFamily: '"Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", "sans-serif"'
+      },
+      h4:{
+        fontFamily: '"Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", "sans-serif"'
       }
     },
   });
