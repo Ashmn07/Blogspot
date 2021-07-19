@@ -15,18 +15,23 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 180,
   },
-  toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    backgroundColor: "#cc7722",
-    paddingTop:theme.spacing(3),
-    paddingRight:theme.spacing(3),
-    paddingLeft:theme.spacing(3)
+  toolbar:{
+    display:'flex',
+    justifyContent:'space-between',
+    backgroundColor: "#35281E",
   },
+  // toolbar: {
+  //   display: "flex",
+  //   justifyContent: "space-between",
+  //   backgroundColor: "#cc7722",
+  //   paddingTop:theme.spacing(3),
+  //   paddingRight:theme.spacing(3),
+  //   paddingLeft:theme.spacing(3)
+  // },
   content: {
     flexGrow: 1,
     padding: theme.spacing(2),
-    // backgroundColor:'white'
+    backgroundColor:'#F9E4B7'
   },
   cardContent: {
     display: "flex",
@@ -35,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   joinButton: {
-    backgroundColor: "#66bfbf ",
-    color: "black"
+    backgroundColor: "#35281E ",
+    color: "white"
   },
   cardHeading: {
     padding: theme.spacing(2),
@@ -56,44 +61,41 @@ const useStyles = makeStyles((theme) => ({
   },
   Logo: {
     marginRight: theme.spacing(6),
-    fontfamily: "Shadows Into Light",
   },
   navItems: {
     textDecoration: "none",
-    color: '#141414',
+    color: 'white',
     margin: theme.spacing(1.5),
   },
   partNav: {
     display: "flex",
     alignItems: "center",
-    paddingTop:theme.spacing(0.5),
-    paddingLeft: theme.spacing(15),
-    paddingRight: theme.spacing(15)
+    // paddingTop:theme.spacing(0.5),
+    // paddingLeft: theme.spacing(15),
+    // paddingRight: theme.spacing(15)
   },
   bannerPic: {
-    //https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1067&q=80
-    //https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHdyaXRpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60
-    //background: `url(https://images.unsplash.com/photo-1604993775742-c165463c4841?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80)`,
-    // backgroundColor: '#000000',
-    // backgroundImage: 'linear-gradient(147deg, #000000 0%, #434343 74%)',
-    backgroundColor: '#cc7722',
+    // https://images.unsplash.com/photo-1550592704-6c76defa9985?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80
+    // backgroundColor: '#cc7722',
     height:"max-content",
-    // backgroundPosition: "center",
-    // backgroundRepeat: "no-repeat",
-    // backgroundSize: "cover",
+    backgroundImage: `linear-gradient(0deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8071603641456583) 100%),url("https://images.unsplash.com/photo-1550592704-6c76defa9985?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80")`,
+    backgroundSize: "cover",
+    objectFit:'contain',
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
   },
   bannerContent: {
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(18),
     paddingLeft: theme.spacing(18),
     maxWidth: "50vw",
-    color: "black",
-    paddingBottom:theme.spacing(10)
+    color: "white",
+    paddingBottom:theme.spacing(18)
   },
   bannerDesc: {
     padding: theme.spacing(1.5),
   },
   bannerButton: {
-    backgroundColor: "#117a8b",
+    backgroundColor: "#35281E",
     color: "white",
     margin: theme.spacing(2),
   },
@@ -112,7 +114,6 @@ function Home() {
 
   const [user, setUser] = useState()
   const [userDomains, setUserDomains] = useState([])
-  const [domains, setDomains] = useState()
 
   useEffect(() =>{
     setUser(JSON.parse(localStorage.getItem("user")))   
@@ -138,44 +139,52 @@ function Home() {
     history.push('/login')
   }
 
+  if(userDomains.length===0){
+    return(
+      <div
+      style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
+      >
+        <h3>Loading...</h3>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <AppBar position="relative" style={{ boxShadow: "none" }}>
-        <Toolbar className={classes.toolbar}>
-          <div className={classes.partNav}>
-            <div className={classes.Logo}>
-              <Link to="/" className={classes.navItems}>
-                <Typography variant="h4" noWrap>
-                  Blogsite
-                </Typography>
-              </Link>
-            </div>
+      <AppBar >
+          <Toolbar className={classes.toolbar}>
+            <div className={classes.partNav}>
+              <div className={classes.Logo}>
+                <Link to="/" className={classes.navItems}>
+                  <Typography variant="h5" noWrap>
+                    Blogsite
+                  </Typography>
+                </Link>
+              </div>
             <Link to="/" className={classes.navItems}>
               <Typography variant="h6" noWrap>
                 Home
               </Typography>
-            </Link>
+             </Link>
             <Link to="/domain" className={classes.navItems}>
               <Typography variant="h6" noWrap>
                 Domains
               </Typography>
-            </Link>
+             </Link>
             <Link to="/documents" className={classes.navItems}>
               <Typography variant="h6" noWrap>
                 Documents
               </Typography>
-            </Link>
-          </div>
-          <div className={classes.partNav}>
-            <Button style={{ color: "", margin: "7px" }} onClick={logout}>
-              <ExitToAppIcon />
-              <Typography variant="body1" noWrap>
-                Logout
-              </Typography>
-            </Button>
-          </div>
-        </Toolbar>
-      </AppBar>
+             </Link>
+             </div>
+            <div className={classes.partNav}>
+              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
+                <ExitToAppIcon/>
+                <Typography variant="body1" noWrap>Logout</Typography>
+              </Button>
+            </div>
+          </Toolbar>
+        </AppBar>
 
       <div className={classes.bannerPic}>
         <div className={classes.bannerContent}>
@@ -189,9 +198,11 @@ function Home() {
             the text editor and also communicate with each other using the chat
             section
           </Typography>
+          <Link to='/domain' style={{textDecoration: "none"}}>
           <Button variant="contained" className={classes.bannerButton}>
             View Communities
           </Button>
+          </Link>
         </div>
         <div className={classes.bannercontentpic}></div>
       </div>
@@ -226,7 +237,7 @@ function Home() {
                   <Button
                     className={classes.joinButton}
                     disabled
-                    style={{ color: "black" }}
+                    style={{color: "white"}}
                   >
                     <Typography variant="body1" noWrap>
                       Joined

@@ -18,13 +18,10 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 const useStyles = makeStyles((theme) => ({
-  media: {
-    height: 180,
-  },
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
-    backgroundColor: "#66bfbf",
+    backgroundColor: "#35281E",
   },
   Logo: {
     marginRight: theme.spacing(6),
@@ -32,13 +29,12 @@ const useStyles = makeStyles((theme) => ({
   },
   navItems: {
     textDecoration: "none",
-    color: "black",
+    color: "white",
     margin: theme.spacing(1.5),
   },
   partNav: {
     display: "flex",
     alignItems: "center",
-    color: "black",
   },
   domainContent: {
     padding: theme.spacing(4),
@@ -60,23 +56,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     padding: theme.spacing(2),
   },
-  domainContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: theme.spacing(2),
-    color:'white',
-    // backgroundPosition: "center",
-    // backgroundRepeat: "no-repeat",
-    // backgroundSize: "cover",
-    backgroundColor: "#303030"
-  },
   domainContentItem: {
     margin: theme.spacing(2),
   },
   userDetails: {
     display: "flex",
     flexDirection: "column",
-    margin: theme.spacing(3),
+    backgroundColor:'#F9E4B7',
     padding: theme.spacing(3),
   },
   joinButton:{
@@ -92,6 +78,17 @@ const useStyles = makeStyles((theme) => ({
 function DomainDetails({match}) {
 
     const classes = useStyles();
+    const domainContainer = {
+      display: "flex",
+      justifyContent: "space-between",
+      color:'white',
+      height:"max-content",
+      padding:'100px',
+      backgroundSize: "cover",
+      objectFit:'contain',
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    }
     const user = localStorage.getItem('user');
     const [enterCode,setEnterCode] = useState(false)
     const [enterName,setEnterName] = useState(false)
@@ -218,7 +215,7 @@ function DomainDetails({match}) {
     
     return (
       <div>
-        <AppBar >
+        <AppBar>
           <Toolbar className={classes.toolbar}>
             <div className={classes.partNav}>
               <div className={classes.Logo}>
@@ -246,7 +243,7 @@ function DomainDetails({match}) {
             </div>
             <div className={classes.partNav}>
               <Button
-                style={{ color: "black", margin: "7px" }}
+                style={{ color: "white", margin: "7px" }}
                 onClick={logout}
               >
                 <ExitToAppIcon />
@@ -265,7 +262,7 @@ function DomainDetails({match}) {
             The document code you entered is invalid!
           </Alert>
         ) : null}
-        <div className={classes.domainContainer}>
+        <div style={{...domainContainer,background:`linear-gradient(0deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8071603641456583) 100%),url('${domainDetails?.domainPic}')`}}>
           <div className={classes.domainContent}>
             <Typography variant="h3" className={classes.domainContentItem}>
               {domainDetails?.domainName}

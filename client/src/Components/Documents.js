@@ -15,11 +15,13 @@ const useStyles = makeStyles((theme) => ({
   toolbar:{
     display:'flex',
     justifyContent:'space-between',
-    backgroundColor: "#66bfbf",
+    backgroundColor: "#35281E",
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(2),
+    backgroundColor: '#F9E4B7',
+    minHeight:'100vh'
   },
   cardContent:{
     display: 'flex',
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   joinButton:{
-    backgroundColor:'#ff1616',
+    backgroundColor:'#35281E',
   },
   cardHeading:{
     padding: theme.spacing(2),
@@ -47,11 +49,10 @@ const useStyles = makeStyles((theme) => ({
   },
   Logo:{
     marginRight:theme.spacing(6),
-    fontfamily: 'Shadows Into Light'
   },
   navItems:{
     textDecoration: 'none',
-    color:'black',
+    color:'white',
     margin:theme.spacing(1.5)
   },
   partNav:{
@@ -70,7 +71,7 @@ function Documents() {
 
   const classes = useStyles()
   const history = useHistory()
-  const [documents,setDocuments] = useState()
+  const [documents,setDocuments] = useState([])
 
   const logout = () => {
     localStorage.clear()
@@ -94,6 +95,16 @@ function Documents() {
         const data = await res.json()
         setDocuments(data.documents)
         console.log(data)
+    }
+
+    if(documents.length===0){
+      return(
+        <div
+        style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
+        >
+          <h3>Loading...</h3>
+        </div>
+      )
     }
 
     return (
@@ -125,7 +136,7 @@ function Documents() {
              </Link>
              </div>
             <div className={classes.partNav}>
-              <Button style={{color: "black",margin:'7px'}} onClick={logout}>
+              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
                 <ExitToAppIcon/>
                 <Typography variant="body1" noWrap>Logout</Typography>
               </Button>
@@ -153,7 +164,7 @@ function Documents() {
                       <Typography variant="body1">
                         {d.users.length || 0}{d.users.length!==1?" Collaborators":" Collaborator"} 
                       </Typography>
-                      <Button size="small" style={{backgroundColor:"#117a8b",color:'white'}} onClick={()=>history.push('/collab',{roomId: d._id})}>Edit </Button>
+                      <Button size="small" style={{backgroundColor:"#35281E",color:'white'}} onClick={()=>history.push('/collab',{roomId: d._id})}>Edit </Button>
                     </CardActions>
                   </Card>
               </Grid>

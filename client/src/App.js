@@ -1,13 +1,15 @@
+import {Suspense,lazy} from 'react'
 import './App.css';
-import Login from './Components/Login';
-import Signup from './Components/Signup';
-import Collab from './Components/Collab';
 import {BrowserRouter, Route, Switch, Redirect, useHistory} from 'react-router-dom'
-import Home from './Components/Home';
-import DomainDetails from './Components/DomainDetails';
-import Domains from './Components/Domains';
-import Documents from './Components/Documents';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+const Login = lazy(()=>import('./Components/Login'))
+const Signup = lazy(()=>import('./Components/Signup'))
+const Collab = lazy(()=>import('./Components/Collab'))
+const Home = lazy(()=>import('./Components/Home'))
+const DomainDetails = lazy(()=>import('./Components/DomainDetails'))
+const Domains = lazy(()=>import('./Components/Domains'))
+const Documents = lazy(()=>import('./Components/Documents'))
+
 
 function Routes(){
   const history = useHistory()
@@ -22,6 +24,16 @@ function Routes(){
     history.push('/login')
   }
   return(
+    <>
+    <Suspense
+    fallback={
+      <div
+      style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
+      >
+        <h3>Loading...</h3>
+      </div>
+    }
+    >
     <Switch>
       <Route path="/login" component={Login} exact/>
       <Route path="/signup" component={Signup} exact/>
@@ -32,6 +44,8 @@ function Routes(){
       <Route path="/" component={Home} exact/>
       <Redirect to="/"/>
     </Switch>
+    </Suspense>
+    </>
   )
 }
 

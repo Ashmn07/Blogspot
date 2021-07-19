@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(2),
     paddingTop:theme.spacing(10),
-    backgroundColor: '#F9E4B7'
+    backgroundColor: '#F9E4B7',
+    minHeight:'100vh'
   },
   cardContent:{
     display: 'flex',
@@ -54,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
   },
   Logo:{
     marginRight:theme.spacing(6),
-    fontfamily: 'Shadows Into Light'
   },
   navItems:{
     textDecoration: 'none',
@@ -72,7 +72,7 @@ export default function Domains() {
   const history = useHistory()
 
   const [user, setUser] = useState()
-  const [domains, setDomains] = useState()
+  const [domains, setDomains] = useState([])
   const [userDomains, setUserDomains] = useState()
 
   useEffect(() =>{
@@ -125,6 +125,16 @@ export default function Domains() {
   const logout = () => {
     localStorage.clear()
     history.push('/login')
+  }
+
+  if(domains.length===0){
+    return(
+      <div
+      style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
+      >
+        <h3>Loading...</h3>
+      </div>
+    )
   }
 
   return (
