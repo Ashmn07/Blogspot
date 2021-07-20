@@ -41,11 +41,17 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonActions: {
     display: "flex",
-    margin: theme.spacing(2),
     justifyContent: "space-evenly"
   },
   collabheading: {
     margin: theme.spacing(2),
+  },
+  domainContainer:{
+    display: "flex",
+      justifyContent: "space-between",
+      color:'white',
+      height:"max-content",
+      padding:'100px',
   },
   collabButtons: {
     display: "flex",
@@ -66,9 +72,19 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   joinButton:{
-    backgroundColor:'#66bfbf',
-    color:"black",
+    backgroundColor:'#cc7722',
+    color:"white",
     margin: theme.spacing(2),
+    "&:hover": {
+      backgroundColor: "#b7410e",
+    },
+  },
+  collabButton: {
+    backgroundColor:'#cc7722',
+    color:"white",
+    "&:hover": {
+      backgroundColor: "#b7410e",
+    },
   },
   inputColor:{
     color:'white'
@@ -78,23 +94,12 @@ const useStyles = makeStyles((theme) => ({
 function DomainDetails({match}) {
 
     const classes = useStyles();
-    const domainContainer = {
-      display: "flex",
-      justifyContent: "space-between",
-      color:'white',
-      height:"max-content",
-      padding:'100px',
-      backgroundSize: "cover",
-      objectFit:'contain',
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-    }
     const user = localStorage.getItem('user');
     const [enterCode,setEnterCode] = useState(false)
     const [enterName,setEnterName] = useState(false)
     const [joinCode,setJoinCode] = useState('')
     const [roomName,setRoomName] = useState('')
-    const [domainDetails,setDomainDetails] = useState()
+    const [domainDetails,setDomainDetails] = useState([])
     const [joinAlert,setJoinAlert] = useState(false)
     const [invalidCode, setInvalidCode] = useState(false)
     const [joinedButton, setJoinedButton] = useState(false)
@@ -109,7 +114,7 @@ function DomainDetails({match}) {
         }
         else{
           setJoinAlert(true)
-          setTimeout(()=>setJoinAlert(false),2000);
+          setTimeout(()=>setJoinAlert(false),3000);
         }
     }
     const joinRoom = (e) => {
@@ -140,16 +145,19 @@ function DomainDetails({match}) {
           }
           else{
             setJoinAlert(true)
-            setTimeout(()=>setJoinAlert(false),2000);
+            setTimeout(()=>setJoinAlert(false),3000);
           }
         }
         docCheck()
     }
 
-    async function joinDomain() {
+    function joinDomain() {
       setJoinedButton(true)
+      const temp = domainDetails
+      temp.users.push(JSON.parse(localStorage.getItem("user")))
+      setDomainDetails(temp)
       const jwtToken = localStorage.getItem("jwt");
-      const res = await fetch("/api/join", {
+      fetch("/api/join", {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -158,7 +166,7 @@ function DomainDetails({match}) {
         body: JSON.stringify({
           domainId: match.params.domainId,
         }),
-      });
+      })
     }
 
     const fetchDomainDetails = async () => {
@@ -173,10 +181,6 @@ function DomainDetails({match}) {
         }),
       });
       const data = await result.json();
-      const check = await checkUserDomain()
-      if(check === true){
-        setJoinedButton(true)
-      }
       setDomainDetails(data.domain);
     };
 
@@ -201,7 +205,15 @@ function DomainDetails({match}) {
 
     useEffect(() =>{
         fetchDomainDetails()
+        check()
     },[])
+
+    async function check(){
+      const check = await checkUserDomain()
+      if(check === true){
+        setJoinedButton(true)
+      }
+    }
 
     const logout = () => {
       localStorage.clear();
@@ -211,6 +223,16 @@ function DomainDetails({match}) {
     const mailClickHandler = (e,email) => {
       e.preventDefault()
       window.open(`mailto:${email}`)
+    }
+
+    if(domainDetails.length===0){
+      return(
+        <div
+        style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
+        >
+          <h3>Loading...</h3>
+        </div>
+      )
     }
     
     return (
@@ -253,8 +275,7 @@ function DomainDetails({match}) {
               </Button>
             </div>
           </Toolbar>
-        </AppBar>
-        {joinAlert ? (
+          {joinAlert ? (
           <Alert severity="error">Join the domain to continue!</Alert>
         ) : null}
         {invalidCode ? (
@@ -262,7 +283,15 @@ function DomainDetails({match}) {
             The document code you entered is invalid!
           </Alert>
         ) : null}
-        <div style={{...domainContainer,background:`linear-gradient(0deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8071603641456583) 100%),url('${domainDetails?.domainPic}')`}}>
+        </AppBar>
+        <div style={{
+          background:`linear-gradient(0deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8071603641456583) 100%),url('${domainDetails?.domainPic}')`,
+          backgroundSize: "cover",
+          height:'70vh',
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}>
+          <div className={classes.domainContainer}>
           <div className={classes.domainContent}>
             <Typography variant="h3" className={classes.domainContentItem}>
               {domainDetails?.domainName}
@@ -292,6 +321,7 @@ function DomainDetails({match}) {
                   setEnterCode(true);
                   setEnterName(false);
                 }}
+                className={classes.joinButton}
               >
                 <Typography variant="h6">Join Room</Typography>
               </Button>
@@ -302,7 +332,7 @@ function DomainDetails({match}) {
                   setEnterName(true);
                   setEnterCode(false);
                 }}
-                style={{ marginLeft: "20px", marginRight: "20px" }}
+                className={classes.joinButton}
               >
                 <Typography variant="h6">Create Room</Typography>
               </Button>
@@ -327,6 +357,7 @@ function DomainDetails({match}) {
                     color="secondary"
                     variant="contained"
                     onClick={joinRoom}
+                    className={classes.collabButton}
                   >
                     <Typography variant="h6">Join</Typography>
                   </Button>
@@ -350,6 +381,7 @@ function DomainDetails({match}) {
                     variant="contained"
                     disabled={roomName === "" ? true : false}
                     onClick={createRoom}
+                    className={classes.collabButton}
                   >
                     <Typography variant="h6">Create</Typography>
                   </Button>
@@ -357,6 +389,7 @@ function DomainDetails({match}) {
               ) : null}
             </div>
           </div>
+        </div>
         </div>
         <div className={classes.userDetails}>
           <Typography variant="h4">Members List</Typography>
@@ -377,7 +410,7 @@ function DomainDetails({match}) {
                     <ContactMailIcon
                       fontSize="large"
                       onClick={(e) => mailClickHandler(e, user.email)}
-                      style={{ cursor: "pointer", color: "#66bfbf" }}
+                      style={{ cursor: "pointer", color: "#cc7722" }}
                     />
                   </CardContent>
                 </Card>

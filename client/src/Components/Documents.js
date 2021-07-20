@@ -10,6 +10,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import {useHistory,Link} from 'react-router-dom'
+import Footer from './Footer'
 
 const useStyles = makeStyles((theme) => ({
   toolbar:{
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(2),
+    paddingTop:theme.spacing(10),
     backgroundColor: '#F9E4B7',
     minHeight:'100vh'
   },
@@ -72,6 +74,7 @@ function Documents() {
   const classes = useStyles()
   const history = useHistory()
   const [documents,setDocuments] = useState([])
+  const [show,setShow] = useState(false)
 
   const logout = () => {
     localStorage.clear()
@@ -93,11 +96,12 @@ function Documents() {
           }
         })
         const data = await res.json()
+        data.documents.length===0?setShow(true):setShow(false)
         setDocuments(data.documents)
         console.log(data)
     }
 
-    if(documents.length===0){
+    if(documents.length===0 && !show){
       return(
         <div
         style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
@@ -109,7 +113,7 @@ function Documents() {
 
     return (
       <div className={classes.root}>
-           <AppBar position="relative">
+           <AppBar>
           <Toolbar className={classes.toolbar}>
             <div className={classes.partNav}>
               <div className={classes.Logo}>
@@ -143,8 +147,9 @@ function Documents() {
             </div>
           </Toolbar>
         </AppBar>
+        {
+          !show?
         <main className={classes.content}>
-        <div className={classes.toolbar} />
         <Typography className={classes.heading} variant="h4">
            Documents
         </Typography>
@@ -171,7 +176,14 @@ function Documents() {
             ))
           }
         </Grid>
-      </main>
+      </main>:
+      <div
+      style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
+      >
+        <h1>No documents created</h1>
+      </div>
+}
+  <Footer/>
        </div>
     )
 }

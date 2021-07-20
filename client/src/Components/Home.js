@@ -30,13 +30,14 @@ const useStyles = makeStyles((theme) => ({
   // },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
+    paddingBottom: theme.spacing(7),
     backgroundColor:'#F9E4B7'
   },
   cardContent: {
     display: "flex",
     justifyContent: "space-between",
-    width: "95%",
+    width: "100%",
     alignItems: "center",
   },
   joinButton: {
@@ -95,9 +96,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1.5),
   },
   bannerButton: {
-    backgroundColor: "#35281E",
-    color: "white",
+    backgroundColor:'#cc7722',
+    color:"white",
     margin: theme.spacing(2),
+    "&:hover": {
+      backgroundColor: "#b7410e",
+    },
   },
   bannercontentpic:{
     background: `url(https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=349&q=80)`,
@@ -114,6 +118,7 @@ function Home() {
 
   const [user, setUser] = useState()
   const [userDomains, setUserDomains] = useState([])
+  const [show,setShow] = useState(false)
 
   useEffect(() =>{
     setUser(JSON.parse(localStorage.getItem("user")))   
@@ -130,7 +135,7 @@ function Home() {
       }
     })
     const data = await res.json()
-    console.log(data)
+    data.length===0?setShow(true):setShow(false)
     setUserDomains(data)
   }
 
@@ -139,7 +144,7 @@ function Home() {
     history.push('/login')
   }
 
-  if(userDomains.length===0){
+  if(userDomains.length===0 && !show){
     return(
       <div
       style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
@@ -206,16 +211,16 @@ function Home() {
         </div>
         <div className={classes.bannercontentpic}></div>
       </div>
-
+    {
+      !show?
       <main className={classes.content}>
-        {userDomains?
+        {userDomains.length!==0?
           <Typography className={classes.heading} variant="h4">
             Joined Domains
           </Typography>
           :
           null
         }
-
         <Grid container spacing={4}>
           {userDomains?.map((d) => (
             <Grid item lg={4} md={6} xs={12} key={d.id}>
@@ -234,15 +239,6 @@ function Home() {
                       {d.domainName}
                     </Typography>
                   </Link>
-                  <Button
-                    className={classes.joinButton}
-                    disabled
-                    style={{color: "white"}}
-                  >
-                    <Typography variant="body1" noWrap>
-                      Joined
-                    </Typography>
-                  </Button>
                 </div>
                 <Typography className={classes.cardDesc} variant="subtitle2">
                   {d.description}
@@ -252,6 +248,13 @@ function Home() {
           ))}
         </Grid>
       </main>
+      :
+      <div
+      style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'30vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
+      >
+        <h1>No Joined Domains</h1>
+      </div>
+    }
     </div>
   );
 }

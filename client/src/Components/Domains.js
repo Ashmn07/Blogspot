@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button'
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {useHistory,Link} from 'react-router-dom'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Footer from './Footer'
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -24,18 +25,23 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(2),
     paddingTop:theme.spacing(10),
+    paddingBottom: theme.spacing(7),
     backgroundColor: '#F9E4B7',
     minHeight:'100vh'
   },
   cardContent:{
     display: 'flex',
     justifyContent:'space-between',
-    width: '95%',
+    width: '100%',
     alignItems: 'center',
   },
   joinButton:{
-    backgroundColor:'#35281E',
-    color:"white"
+    backgroundColor:'#cc7722',
+    color:"white",
+    margin: theme.spacing(2),
+    "&:hover": {
+      backgroundColor: "#b7410e",
+    },
   },
   cardHeading:{
     padding: theme.spacing(2),
@@ -138,7 +144,7 @@ export default function Domains() {
   }
 
   return (
-    <div >
+    <div>
       <AppBar >
           <Toolbar className={classes.toolbar}>
             <div className={classes.partNav}>
@@ -175,7 +181,6 @@ export default function Domains() {
         </AppBar>
     
       <main className={classes.content}>
-        <div className={classes.toolbar} />
         <Typography className={classes.heading} variant="h4">
            Domains
         </Typography>
@@ -221,6 +226,7 @@ export default function Domains() {
           }
         </Grid>
       </main>
+      {/* <Footer/> */}
     </div>
   );
 }
