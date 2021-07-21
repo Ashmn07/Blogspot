@@ -2,6 +2,7 @@ import {Suspense,lazy} from 'react'
 import './App.css';
 import {BrowserRouter, Route, Switch, Redirect, useHistory} from 'react-router-dom'
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { CircularProgress } from '@material-ui/core';
 const Login = lazy(()=>import('./Components/Login'))
 const Signup = lazy(()=>import('./Components/Signup'))
 const Collab = lazy(()=>import('./Components/Collab'))
@@ -30,7 +31,7 @@ function Routes(){
       <div
       style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
       >
-        <h3>Loading...</h3>
+          <CircularProgress size={80} style={{color:"#35281E"}}/>
       </div>
     }
     >
@@ -53,15 +54,21 @@ function App() {
  
   const theme = createMuiTheme({
     typography: {
-      h3: {
+      // h2:{
+      //   fontFamily:"Just Me Again Down Here"
+      // },
+      h2: {
         fontFamily: '"Montserrat", Open Sans',
       },
-      h5: {
-        fontFamily: '"Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", "sans-serif"'
+      h4: {
+        fontFamily: 'Satisfy'
       },
-      h4:{
-        fontFamily: '"Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", "sans-serif"'
+      h5:{
+        fontFamily: 'Montserrat',
       }
+      // h4:{
+      //   fontFamily: '"Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", "sans-serif"'
+      // }
     },
   });
 

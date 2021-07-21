@@ -11,6 +11,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import {useHistory,Link} from 'react-router-dom'
 import Footer from './Footer'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Navbar from './Navbar'
 
 const useStyles = makeStyles((theme) => ({
   toolbar:{
@@ -31,8 +33,12 @@ const useStyles = makeStyles((theme) => ({
     width: '95%',
     alignItems: 'center',
   },
-  joinButton:{
-    backgroundColor:'#35281E',
+  joinedButton:{
+    backgroundColor:'#cc7722',
+    color:'white',
+    "&:hover": {
+      backgroundColor: "#b7410e",
+    },
   },
   cardHeading:{
     padding: theme.spacing(2),
@@ -40,9 +46,10 @@ const useStyles = makeStyles((theme) => ({
     // fontSize: '1.4rem'
   },
   heading:{
-    paddingTop: theme.spacing(2),
-    padding: theme.spacing(1.5),
-    fontWeight:'bold',
+    // paddingTop: theme.spacing(3),
+    padding: theme.spacing(3),
+    fontSize: '2.2rem',
+    fontWeight:'bold'
     // textAlign: 'center'
   },
   cardDesc: {
@@ -106,62 +113,29 @@ function Documents() {
         <div
         style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
         >
-          <h3>Loading...</h3>
+          {/* <h3>Loading...</h3> */}
+          <CircularProgress size={80} style={{color:"#35281E"}}/>
         </div>
       )
     }
 
     return (
       <div className={classes.root}>
-           <AppBar>
-          <Toolbar className={classes.toolbar}>
-            <div className={classes.partNav}>
-              <div className={classes.Logo}>
-                <Link to="/" className={classes.navItems}>
-                  <Typography variant="h5" noWrap>
-                    Blogsite
-                  </Typography>
-                </Link>
-              </div>
-            <Link to="/" className={classes.navItems}>
-              <Typography variant="h6" noWrap>
-                Home
-              </Typography>
-             </Link>
-            <Link to="/domain" className={classes.navItems}>
-              <Typography variant="h6" noWrap>
-                Domains
-              </Typography>
-             </Link>
-            <Link to="/documents" className={classes.navItems}>
-              <Typography variant="h6" noWrap>
-                Documents
-              </Typography>
-             </Link>
-             </div>
-            <div className={classes.partNav}>
-              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
-                <ExitToAppIcon/>
-                <Typography variant="body1" noWrap>Logout</Typography>
-              </Button>
-            </div>
-          </Toolbar>
-        </AppBar>
+          <Navbar/>
         {
           !show?
         <main className={classes.content}>
-        <Typography className={classes.heading} variant="h4">
+        <Typography className={classes.heading} variant="h5">
            Documents
         </Typography>
-        {  console.log(documents)}
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           {
             documents?.map(d=>(
               <Grid item lg={4} md={6} xs={12} key={d.id}>
                   {/* <h1>{d.name || "temp"}</h1> */}
                   <Card>
                     <CardContent>
-                      <Typography variant="h4">
+                      <Typography variant="h5">
                         {d.name || "temp"}
                       </Typography>
                     </CardContent>
@@ -169,7 +143,7 @@ function Documents() {
                       <Typography variant="body1">
                         {d.users.length || 0}{d.users.length!==1?" Collaborators":" Collaborator"} 
                       </Typography>
-                      <Button size="small" style={{backgroundColor:"#35281E",color:'white'}} onClick={()=>history.push('/collab',{roomId: d._id})}>Edit </Button>
+                      <Button size="small" className={classes.joinedButton} onClick={()=>history.push('/collab',{roomId: d._id})}>Edit </Button>
                     </CardActions>
                   </Card>
               </Grid>
@@ -183,7 +157,7 @@ function Documents() {
         <h1>No documents created</h1>
       </div>
 }
-  <Footer/>
+<Footer/>
        </div>
     )
 }

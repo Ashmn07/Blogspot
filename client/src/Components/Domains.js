@@ -11,6 +11,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {useHistory,Link} from 'react-router-dom'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Footer from './Footer'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Navbar from './Navbar';
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -43,6 +45,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#b7410e",
     },
   },
+  joinButtonInverse:{
+    backgroundColor:'#b7410e',
+    color:"white",
+    margin: theme.spacing(2),
+    "&:hover": {
+      backgroundColor: "#cc7722",
+    },
+  },
   cardHeading:{
     padding: theme.spacing(2),
     fontWeight:'600',
@@ -50,8 +60,9 @@ const useStyles = makeStyles((theme) => ({
     // fontSize: '1.4rem'
   },
   heading:{
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(2.75),
     padding: theme.spacing(1.5),
+    fontSize:'2.2rem',
     fontWeight:'bold',
     // textAlign: 'center'
   },
@@ -138,50 +149,16 @@ export default function Domains() {
       <div
       style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
       >
-        <h3>Loading...</h3>
+        <CircularProgress size={80} style={{color:"#35281E"}}/>
       </div>
     )
   }
 
   return (
     <div>
-      <AppBar >
-          <Toolbar className={classes.toolbar}>
-            <div className={classes.partNav}>
-              <div className={classes.Logo}>
-                <Link to="/" className={classes.navItems}>
-                  <Typography variant="h5" noWrap>
-                    Blogsite
-                  </Typography>
-                </Link>
-              </div>
-            <Link to="/" className={classes.navItems}>
-              <Typography variant="h6" noWrap>
-                Home
-              </Typography>
-             </Link>
-            <Link to="/domain" className={classes.navItems}>
-              <Typography variant="h6" noWrap>
-                Domains
-              </Typography>
-             </Link>
-            <Link to="/documents" className={classes.navItems}>
-              <Typography variant="h6" noWrap>
-                Documents
-              </Typography>
-             </Link>
-             </div>
-            <div className={classes.partNav}>
-              <Button style={{color: "white",margin:'7px'}} onClick={logout}>
-                <ExitToAppIcon/>
-                <Typography variant="body1" noWrap>Logout</Typography>
-              </Button>
-            </div>
-          </Toolbar>
-        </AppBar>
-    
+      <Navbar/>    
       <main className={classes.content}>
-        <Typography className={classes.heading} variant="h4">
+        <Typography className={classes.heading} variant="h5">
            Domains
         </Typography>
         <Grid container spacing={4}>
@@ -207,7 +184,7 @@ export default function Domains() {
                     {/* <Link to ={`/domain/${d._id.toString()}`} style={{ textDecoration: 'none' }}>
                     
                     </Link> */}
-                    <Button className={classes.joinButton} disabled style={{color: "white"}}>
+                    <Button className={classes.joinButtonInverse} disabled style={{color: "white"}}>
                     <Typography variant="body1" noWrap style={{color: 'white'}}>Joined</Typography>
                   </Button>
                   </>
@@ -226,7 +203,7 @@ export default function Domains() {
           }
         </Grid>
       </main>
-      {/* <Footer/> */}
+      <Footer/>
     </div>
   );
 }

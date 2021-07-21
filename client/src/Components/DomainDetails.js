@@ -16,6 +16,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ContactMailIcon from '@material-ui/icons/ContactMail';
+import { CircularProgress } from '@material-ui/core';
+import Footer from './Footer';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -44,14 +46,17 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly"
   },
   collabheading: {
-    margin: theme.spacing(2),
+    padding: theme.spacing(2),
+    fontWeight:'bold',
+    fontSize:'2.2rem'
   },
   domainContainer:{
     display: "flex",
       justifyContent: "space-between",
       color:'white',
       height:"max-content",
-      padding:'100px',
+      padding:'50px',
+      paddingTop:'100px',
   },
   collabButtons: {
     display: "flex",
@@ -70,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     backgroundColor:'#F9E4B7',
     padding: theme.spacing(3),
+    flex:'1'
   },
   joinButton:{
     backgroundColor:'#cc7722',
@@ -88,6 +94,20 @@ const useStyles = makeStyles((theme) => ({
   },
   inputColor:{
     color:'white'
+  },
+  heading:{
+    padding:theme.spacing(2),
+    fontWeight:'bold',
+    fontSize:'2.2rem'
+  },
+  inputStyles: {
+    color:'white',
+    "&:after":{
+      borderColor:'white',
+    },
+    "&:before":{
+      borderColor:'white',
+    },
   }
 }));
 
@@ -230,20 +250,20 @@ function DomainDetails({match}) {
         <div
         style={{ display:'flex',justifyContent: 'center',alignItems: 'center',height:'100vh',backgroundColor:'#F9E4B7',color:'#35281E'}}
         >
-          <h3>Loading...</h3>
+            <CircularProgress size={80} style={{color:"#35281E"}}/>
         </div>
       )
     }
     
     return (
-      <div>
+      <div style={{display: 'flex',flexDirection:'column',minHeight:'100vh'}}>
         <AppBar>
           <Toolbar className={classes.toolbar}>
             <div className={classes.partNav}>
               <div className={classes.Logo}>
                 <Link to="/" className={classes.navItems}>
-                  <Typography variant="h5" noWrap>
-                    Blogsite
+                  <Typography variant="h4" >
+                    Blogspot
                   </Typography>
                 </Link>
               </div>
@@ -287,7 +307,7 @@ function DomainDetails({match}) {
         <div style={{
           background:`linear-gradient(0deg, rgba(20,20,20,1) 0%, rgba(20,20,20,0.8071603641456583) 100%),url('${domainDetails?.domainPic}')`,
           backgroundSize: "cover",
-          height:'70vh',
+          height:'max-content',
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}>
@@ -310,7 +330,7 @@ function DomainDetails({match}) {
             </Button>
           </div>
           <div className={classes.collabContainer}>
-            <Typography variant="h4" className={classes.collabheading}>
+            <Typography variant="h5" className={classes.collabheading}>
               Collaborate
             </Typography>
             <div className={classes.collabButtons}>
@@ -340,9 +360,10 @@ function DomainDetails({match}) {
             <div className={classes.buttonActions}>
               {enterCode ? (
                 <>
-                  <FormControl>
-                    <InputLabel htmlFor="Room Code">Enter Room Code</InputLabel>
+                  <FormControl >
+                    <InputLabel style={{color:'white'}} htmlFor="Room Code">Enter Room Code</InputLabel>
                     <Input
+                       className={classes.inputStyles}
                       InputProps={{
                         className: classes.inputColor
                       }}
@@ -365,11 +386,12 @@ function DomainDetails({match}) {
               ) : null}
               {enterName ? (
                 <>
-                  <FormControl>
-                    <InputLabel htmlFor="Document Name">
+                  <FormControl >
+                    <InputLabel style={{color:'white'}} htmlFor="Document Name">
                       Enter Document Name
                     </InputLabel>
                     <Input
+                    className={classes.inputStyles}
                       id="doc-name"
                       value={roomName}
                       onChange={(e) => setRoomName(e.target.value)}
@@ -392,7 +414,7 @@ function DomainDetails({match}) {
         </div>
         </div>
         <div className={classes.userDetails}>
-          <Typography variant="h4">Members List</Typography>
+          <Typography variant="h5" className={classes.heading}>Members List</Typography>
           <Grid container spacing={4}>
             {domainDetails?.users.map((user) => (
               <Grid item lg={4} md={6} xs={12}>
@@ -418,6 +440,7 @@ function DomainDetails({match}) {
             ))}
           </Grid>
         </div>
+        <Footer />
       </div>
     );
 }
