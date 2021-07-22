@@ -50,4 +50,33 @@ router.put("/api/join",requireLogin,(req, res) =>{
     })
 })
 
+router.put('/addDoctoDomain',requireLogin,(req,res) => {
+    const {domainId,docId} = req.body
+    Domain.findByIdAndUpdate(domainId,{$push:{documents:docId}},{new:true},(err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }  
+    })
+})
+
+router.put('/checkDocinDomain',requireLogin,(req,res)=>{
+    const {docId,domainId} = req.body
+    Domain.findById(domainId,(err,result)=>{
+        if(result){
+            console.log(result.documents,docId)
+            if(result.documents.includes(docId)){
+                console.log("Heyy it is ",true)
+                return res.json(true)
+            }
+            else{
+                console.log(false)
+                return res.json(false)
+            }
+        }
+        else if(err){
+            return res.status(422).json({error:err})
+        }
+    })
+})
+
 module.exports = router

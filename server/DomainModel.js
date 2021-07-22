@@ -5,6 +5,7 @@ const Domain = new Schema({
   description: String,
   domainName: String,
   domainPic: String,
+  documents:Array,
   users: [{
       type:Schema.Types.ObjectId,
       ref:"User"

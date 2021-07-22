@@ -174,7 +174,7 @@ function Home() {
           </Link>
           <Link to="/documents" style={{ textDecoration: "none" }}>
             <Button variant="contained" className={classes.bannerButton}>
-              View Documents
+              Your Documents
             </Button>
           </Link>
         </div>

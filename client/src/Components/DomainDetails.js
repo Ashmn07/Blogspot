@@ -67,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     padding: theme.spacing(2),
   },
+  domainContentHeading: {
+    fontSize: '3rem',
+    fontWeight: 'bold',
+    margin: theme.spacing(2),
+  },
   domainContentItem: {
     margin: theme.spacing(2),
   },
@@ -75,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     backgroundColor:'#F9E4B7',
     padding: theme.spacing(3),
+    paddingBottom: theme.spacing(6),
     flex:'1'
   },
   joinButton:{
@@ -121,15 +127,52 @@ function DomainDetails({match}) {
     const [roomName,setRoomName] = useState('')
     const [domainDetails,setDomainDetails] = useState([])
     const [joinAlert,setJoinAlert] = useState(false)
-    const [invalidCode, setInvalidCode] = useState(false)
+    // const [invalidCode, setInvalidCode] = useState(false)
     const [joinedButton, setJoinedButton] = useState(false)
+    const [docInDom,setDocInDom] = useState(false)
     const history = useHistory()
     const roomId = v4()
+
+    function truncate(str) {
+      return str?.length > 19 ? str.substr(0, 18) + "..." : str;
+  }
+
+    const addDoctoDomain = async() => {
+      const res = await fetch('/addDoctoDomain',{
+          method: 'put',
+          headers: {
+            "Content-Type":"application/json",
+            "Authorization":"Bearer "+ localStorage.getItem("jwt")
+          },
+          body:JSON.stringify({
+              docId: roomId,
+              domainId:match.params.domainId
+          })
+      })
+      const data = await res.json()
+    }
+
+    const checkDocinDomain = async() => {
+      const res = await fetch('/checkDocinDomain',{
+        method: 'put',
+        headers: {
+          "Content-Type":"application/json",
+          "Authorization":"Bearer "+ localStorage.getItem("jwt")
+        },
+        body:JSON.stringify({
+            docId: joinCode,
+            domainId:match.params.domainId
+        })
+      })
+      const ans = await res.json()
+      return ans;
+    }
     const createRoom = async(e) => {
         e.preventDefault()
         // console.log(checkUserDomain())
         const check = await checkUserDomain()
         if(check===true){
+          addDoctoDomain()
           history.push('/collab',{roomId: roomId,name:roomName})
         }
         else{
@@ -141,28 +184,35 @@ function DomainDetails({match}) {
         e.preventDefault()
         const docCheck = async() => {
           const check = await checkUserDomain()
-          if(check===true){
-          await fetch('/documentIds',{
-                method: 'put',
-                headers: {
-                  "Content-Type":"application/json",
-                  "Authorization":"Bearer "+ localStorage.getItem("jwt")
-                },
-                body:JSON.stringify({
-                    docId:joinCode
-                })
-            })
-            .then(res => res.json())
-            .then(res => {
-              if(res){
-                  history.push('/collab',{roomId: joinCode})
-              }
-              else{
-                setInvalidCode(true)
-                setTimeout(()=>setInvalidCode(false),2000)
-              }
-            })
+          const check2 = await checkDocinDomain()
+          if(check){
+            if(check2){
+          // await fetch('/documentIds',{
+          //       method: 'put',
+          //       headers: {
+          //         "Content-Type":"application/json",
+          //         "Authorization":"Bearer "+ localStorage.getItem("jwt")
+          //       },
+          //       body:JSON.stringify({
+          //           docId:joinCode
+          //       })
+          //   })
+            // .then(res => res.json())
+            // .then(res => {
+            //   if(res){
+                 history.push('/collab',{roomId: joinCode})
+              // }
+              // else{
+              //   setInvalidCode(true)
+              //   setTimeout(()=>setInvalidCode(false),2000)
+              // }
+           // })
           }
+          else{
+            setDocInDom(true)
+            setTimeout(()=>setDocInDom(false),3000);
+          }
+        }
           else{
             setJoinAlert(true)
             setTimeout(()=>setJoinAlert(false),3000);
@@ -215,7 +265,6 @@ function DomainDetails({match}) {
       const data = await res.json()
       console.log(data.domains)
       if(data.domains.includes(match.params.domainId)){
-        console.log('Trueee')
         return true
       }     
       else{
@@ -298,9 +347,14 @@ function DomainDetails({match}) {
           {joinAlert ? (
           <Alert severity="error">Join the domain to continue!</Alert>
         ) : null}
-        {invalidCode ? (
+        {/* {invalidCode ? (
           <Alert severity="error">
             The document code you entered is invalid!
+          </Alert>
+        ) : null} */}
+        {docInDom ? (
+          <Alert severity="error">
+            This document does not exist in this domain!
           </Alert>
         ) : null}
         </AppBar>
@@ -313,7 +367,7 @@ function DomainDetails({match}) {
         }}>
           <div className={classes.domainContainer}>
           <div className={classes.domainContent}>
-            <Typography variant="h3" className={classes.domainContentItem}>
+            <Typography variant="h5" className={classes.domainContentHeading}>
               {domainDetails?.domainName}
             </Typography>
             <Typography variant="h5" className={classes.domainContentItem}>
@@ -415,20 +469,20 @@ function DomainDetails({match}) {
         </div>
         <div className={classes.userDetails}>
           <Typography variant="h5" className={classes.heading}>Members List</Typography>
-          <Grid container spacing={4}>
+          <Grid container spacing={2}>
             {domainDetails?.users.map((user) => (
               <Grid item lg={4} md={6} xs={12}>
                 <Card
                   style={{
                     width: "max-content",
                     margin: "10px",
-                    minWidth: "20vw",
+                    minWidth: "25vw",
                   }}
                 >
                   <CardContent
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <Typography variant="h5">{user.name}</Typography>
+                    <Typography variant="h6" noWrap>{truncate(user.name)}</Typography>
                     <ContactMailIcon
                       fontSize="large"
                       onClick={(e) => mailClickHandler(e, user.email)}

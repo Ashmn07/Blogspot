@@ -14,11 +14,9 @@ router.put("/documentIds",requireLogin,(req,res) =>{
     const {docId} = req.body
     Document.findById(docId).then(resp => {
         if(resp){
-            console.log(true)
             return res.json(true);
         }
         else{
-            console.log(false)
             return res.json(false);
         }
     })
