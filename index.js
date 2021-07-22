@@ -2,8 +2,8 @@ const express = require('express')
 require('dotenv').config()
 const app = express();
 const PORT = process.env.PORT || 8080
-// const server = require('http').Server(app)
-const io = require('socket.io')(PORT)
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
 require('./models/Document')
 require('./models/DomainModel')
