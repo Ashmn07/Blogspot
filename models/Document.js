@@ -5,10 +5,6 @@ const Document = new Schema({
   data: Object,
   name:String,
   users:Array
-  // [{
-  //   type:Schema.Types.ObjectId,
-  //   ref:"User"
-  // }]
 })
 
 module.exports = model("Document", Document)

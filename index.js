@@ -5,13 +5,17 @@ const PORT = process.env.PORT || 8080
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
-const Document = require('./models/Document')
+require('./models/Document')
+require('./models/DomainModel')
+require('./models/User')
 
 app.use(express.json())
 app.use(require('./routes/auth'))
 app.use(require('./routes/documents'))
 app.use(require('./routes/domains'))
 const mongoose = require('mongoose');
+
+const Document = mongoose.model('Document')
 
 mongoose.connect(process.env.MONGOURI,{
     useNewUrlParser: true,
