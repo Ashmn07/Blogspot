@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 8080
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
-const Document = require('./Document')
+const Document = require('./models/Document')
 
 app.use(express.json())
 app.use(require('./routes/auth'))
