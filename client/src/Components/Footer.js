@@ -5,7 +5,7 @@ function Footer() {
     return (
         <div style={{display:'flex',width:'100vw',color:'white',backgroundColor:'#35281E',textAlign:'center',padding:'1.5vh',alignItems:'center',justifyContent:'center'}}>
             <CopyrightIcon/>
-            <h3>Made by Ashwin, Kartikeyan and Ramanan 2021</h3>
+            <h3>2021 Made by Ashwin, Kartikeyan and Ramanan</h3>
         </div>
     )
 }

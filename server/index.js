@@ -1,4 +1,5 @@
 const express = require('express')
+require('dotenv').config()
 const app = express();
 const PORT = process.env.PORT || 3001
 const io = require('socket.io')(PORT,{
@@ -11,16 +12,14 @@ const io = require('socket.io')(PORT,{
 const Document = require('./Document')
 const User = require('./User')
 const Domain = require('./DomainModel')
-// const Chat = require('./Chat')
 
-// mongoose
 app.use(express.json())
-app.use(require('./auth'))
+app.use(require('./routes/auth'))
+app.use(require('./routes/documents'))
+app.use(require('./routes/domains'))
 const mongoose = require('mongoose');
 
-const MONGOURI = "mongodb+srv://Ash:Bucksin7NBA@cluster0.z1jvy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
-mongoose.connect(MONGOURI,{
+mongoose.connect(process.env.MONGOURI,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -54,9 +53,13 @@ io.on('connection',socket=>{
     })
 })
 
-app.get("/",(req,res)=>{
-    
-})
+// if(process.env.NODE_ENV=="production"){
+//     app.use(express.static('client/build'))
+//     const path = require('path')
+//     app.get("*",(req,res)=>{
+//         res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+//     })
+// }
 
 app.listen(8080,()=>{
     console.log("Server is running",8080);

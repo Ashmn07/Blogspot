@@ -96,7 +96,8 @@ function Chat({id}) {
             width: '33vw'
         },
         form:{
-            backgroundColor:"#141414"
+            backgroundColor:"#141414",
+            color:'white'
         },
         input:{
             marginLeft: '10px',
@@ -165,7 +166,7 @@ function Chat({id}) {
                 if(t.user._id === JSON.parse(localStorage.getItem("user"))._id){
                   addMessStyles = {
                     backgroundColor:"white",
-                    color:"#141414",  
+                    color:"black",  
                     alignSelf:"flex-end", 
                   }
                   addNameStyles = {

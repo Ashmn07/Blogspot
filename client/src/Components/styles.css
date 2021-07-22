@@ -5,9 +5,6 @@ body {
 
 .texteditor__container .ql-editor {
     width: 10in;
-    /* min-height: 11in; */
-    /* height:max-content; */
-    /*min-height:100vh; */
     height: 90%;
     padding: 0.75in;
     margin: 10px;
@@ -17,18 +14,11 @@ body {
 
 .texteditor__container::-webkit-scrollbar {
     display: none;
-  } 
-  /* .texteditor__container .ql-editor::-webkit-scrollbar{
-    display: none;
-  } */
+} 
 
 .texteditor__container{
     overflow-y: hidden !important;
 }
-/* 
-.container .ql-editor.ql-blank {
-    box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.2);
-} */
 
 .texteditor__container .ql-toolbar.ql-snow {
     display: flex;
@@ -42,9 +32,7 @@ body {
 
 .texteditor__container .ql-container.ql-snow {
     padding: 20px;
-    /* margin-bottom:10px; */
     display: flex;
     justify-content: center;
-    /* height: max-content; */
     height: 100%;
 }
