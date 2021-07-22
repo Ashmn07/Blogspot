@@ -2,9 +2,14 @@ const express = require('express')
 require('dotenv').config()
 const http = require('http');
 const app = express();
+const socketio = require('socket.io')
+const cors = require('cors')
+
+app.use(cors())
 const PORT = process.env.PORT || 8080
 const server = http.createServer(app);
-const io = require('socket.io')(server)
+
+const io = socketio(server)
 
 require('./models/Document')
 require('./models/DomainModel')
@@ -14,6 +19,7 @@ app.use(express.json())
 app.use(require('./routes/auth'))
 app.use(require('./routes/documents'))
 app.use(require('./routes/domains'))
+
 const mongoose = require('mongoose');
 
 const Document = mongoose.model('Document')
@@ -62,8 +68,8 @@ if(process.env.NODE_ENV=="production"){
 
 // app.get("/",(req,res)=>{})
 
-app.listen(PORT,()=>{
-    console.log("Server is running",8080);
+server.listen(PORT,()=>{
+    console.log("Server is running",PORT);
 })
 
 async function findOrCreateDocument(id,name) {

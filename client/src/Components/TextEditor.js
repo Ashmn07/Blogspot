@@ -28,9 +28,12 @@ function TextEditor({id,name}) {
   const [socket, setSocket] = useState()
   const [quill, setQuill] = useState()
 
+  // const ENDPOINT = "https://blogspot1.herokuapp.com/"
+  const ENDPOINT = "https://blogspot1.herokuapp.com/"
+
   //setting socket to url value of backend socket server
   useEffect(() =>{
-    const s = io("/")
+    const s = io(ENDPOINT,{ transports: ['websocket'] })
     setSocket(s);
 
     return () =>{
