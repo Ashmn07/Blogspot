@@ -1,8 +1,9 @@
 const express = require('express')
 require('dotenv').config()
+const http = require('http');
 const app = express();
 const PORT = process.env.PORT || 8080
-const server = require('http').Server(app)
+const server = http.createServer(app);
 const io = require('socket.io')(server)
 
 require('./models/Document')
