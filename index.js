@@ -1,17 +1,11 @@
 const express = require('express')
 require('dotenv').config()
 const app = express();
-const PORT = process.env.PORT || 3001
-const io = require('socket.io')(PORT,{
-    cors:{
-        origin: 'http://localhost:3000',
-        methods: ['GET','POST']
-    },
-})
+const PORT = process.env.PORT || 8080
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
 const Document = require('./Document')
-const User = require('./User')
-const Domain = require('./DomainModel')
 
 app.use(express.json())
 app.use(require('./routes/auth'))
@@ -53,15 +47,15 @@ io.on('connection',socket=>{
     })
 })
 
-// if(process.env.NODE_ENV=="production"){
-//     app.use(express.static('client/build'))
-//     const path = require('path')
-//     app.get("*",(req,res)=>{
-//         res.sendFile(path.resolve(__dirname,'client','build','index.html'))
-//     })
-// }
+if(process.env.NODE_ENV=="production"){
+    app.use(express.static('client/build'))
+    const path = require('path')
+    app.get("*",(req,res)=>{
+        res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+    })
+}
 
-app.listen(8080,()=>{
+app.listen(PORT,()=>{
     console.log("Server is running",8080);
 })
 

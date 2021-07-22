@@ -30,7 +30,7 @@ function TextEditor({id,name}) {
 
   //setting socket to url value of backend socket server
   useEffect(() =>{
-    const s = io("http://localhost:3001/")
+    const s = io("/")
     setSocket(s);
 
     return () =>{
