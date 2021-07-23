@@ -167,11 +167,28 @@ function DomainDetails({match}) {
       const ans = await res.json()
       return ans;
     }
+    const createDoc = async() => {
+      const res = await fetch('/createDoc',{
+        method: 'post',
+        headers: {
+          "Content-Type":"application/json",
+          "Authorization":"Bearer "+ localStorage.getItem("jwt")
+        },
+        body:JSON.stringify({
+          docId: roomId,
+          name:roomName,
+        })
+      })
+      const data = await res.json()
+      console.log(data)
+    }
+
     const createRoom = async(e) => {
         e.preventDefault()
         // console.log(checkUserDomain())
         const check = await checkUserDomain()
         if(check===true){
+          createDoc()
           addDoctoDomain()
           history.push('/collab',{roomId: roomId,name:roomName})
         }

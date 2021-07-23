@@ -37,4 +37,15 @@ router.put("/api/joinDoc",requireLogin,(req, res) =>{
     })
 })
 
+router.post('/createDoc',requireLogin,(req, res) =>{
+    const {docId,name} = req.body
+    const doc = new Document({
+        _id:docId,
+        name:name,
+        data:""
+    })
+    doc.save()
+    .then((doc)=>res.json("Document created"))
+})
+
 module.exports = router
