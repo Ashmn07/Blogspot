@@ -86,6 +86,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     minWidth: "12vw",
   },
+  heading:{
+    fontSize:'2.2rem',
+    fontWeight:'bold',
+  },
 }));
 
 function Login() {
@@ -127,7 +131,7 @@ function Login() {
       <div className={classes.root} style={bgUrl}>
         <AppBar position="static">
           <Toolbar className={classes.toolbar}>
-            <Typography variant="h5" className={classes.title}>
+            <Typography variant="h4" className={classes.title}>
               Blogspot
             </Typography>
             <div className={classes.buttons}>
@@ -154,7 +158,7 @@ function Login() {
         <div className={classes.cardContainer}>
           <Card className={classes.card}>
             <CardContent className={classes.cardContent}>
-              <Typography variant="h5" component="h2">
+              <Typography variant="h5" className={classes.heading}>
                 Login
               </Typography>
               <FormControl className={classes.formElement}>

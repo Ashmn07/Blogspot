@@ -82,7 +82,11 @@ const useStyles = makeStyles((theme)=>({
         display: 'flex',
         justifyContent: 'space-between',
         minWidth:'12vw'
-    }
+    },
+    heading:{
+      fontSize:'2.2rem',
+      fontWeight:'bold',
+    },
   }))
 
 function Signup() {
@@ -122,8 +126,6 @@ function Signup() {
             setTimeout(()=>setSuccessShow(false),2000);
           }
         })
-      //   .catch(err=>console.log(err))
-      // .catch(err=>console.log(err))
     }
 
     const classes = useStyles()
@@ -131,7 +133,7 @@ function Signup() {
         <div style={bgUrl}>
             <AppBar position="static">
             <Toolbar className={classes.toolbar}>
-                <Typography variant="h5" className={classes.title}>
+                <Typography variant="h4" className={classes.title}>
                 Blogspot
                 </Typography>
                 <div className={classes.buttons}>
@@ -165,7 +167,7 @@ function Signup() {
             <div className={classes.cardContainer}>
             <Card className={classes.card}>
                 <CardContent className={classes.cardContent}>
-                <Typography variant="h5" component="h2">
+                <Typography variant="h5" className={classes.heading}>
                     Sign Up
                 </Typography>
                 <FormControl className={classes.formElement}>
@@ -177,7 +179,6 @@ function Signup() {
                     <Input id="my-email" value={email} onChange={(e)=>setEmail(e.target.value)} aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl className={classes.formElement}>
-                    {/* <InputLabel htmlFor="pass">Password</InputLabel> */}
                     <TextField id="pass" label="Password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} aria-describedby="my-helper-text" />
                 </FormControl>
                 <Button className={classes.formButton} variant="contained" color="primary" onClick={submitData}>
