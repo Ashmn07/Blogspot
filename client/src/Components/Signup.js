@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme)=>({
         minWidth:'12vw'
     },
     heading:{
-      fontSize:'2.2rem',
+      fontSize:'2rem',
       fontWeight:'bold',
     },
   }))

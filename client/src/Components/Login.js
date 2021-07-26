@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {Link} from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Alert from '@material-ui/lab/Alert';
 import CardContent from '@material-ui/core/CardContent';
@@ -87,10 +87,38 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "12vw",
   },
   heading:{
-    fontSize:'2.2rem',
+    fontSize:'2rem',
     fontWeight:'bold',
   },
+  inputStyles: {
+    color:'black',
+    "&:after":{
+      borderColor:'#35281E',
+    },
+    "&:before":{
+      borderColor:'#35281E',
+    },
+  },
+  inputLabel: {
+    "&:after":{
+      color:'#35281E',
+    },
+  }
 }));
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: '#35281E',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#35281E',
+    },
+    '& .MuiInput-underline:before': {
+      borderBottomColor: '#35281E',
+    },
+  },
+})(TextField);
 
 function Login() {
   const [password,setPassword] = useState('')
@@ -162,22 +190,23 @@ function Login() {
                 Login
               </Typography>
               <FormControl className={classes.formElement}>
-                <InputLabel htmlFor="my-email">Email address</InputLabel>
-                <Input id="my-email" value={email} onChange={(e)=>setEmail(e.target.value)} aria-describedby="my-helper-text" />
+                {/* <InputLabel style={{color:'#35281E'}} htmlFor="my-email">Email address</InputLabel>
+                <Input className={classes.inputStyles} id="my-email" value={email} onChange={(e)=>setEmail(e.target.value)} aria-describedby="my-helper-text" /> */}
+                  <CssTextField  
+                  id="email" label="Email" type="email" 
+                  value={email} onChange={(e)=>setEmail(e.target.value)}
+                  aria-describedby="my-helper-text" />
               </FormControl>
               <FormControl className={classes.formElement}>
-                {/*<InputLabel htmlFor="pass">Password</InputLabel>*/}
-                <TextField id="pass" label="Password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} aria-describedby="my-helper-text" />
+                <CssTextField 
+                id="pass" label="Password" type="password" 
+                value={password} onChange={(e)=>setPassword(e.target.value)}
+                aria-describedby="my-helper-text" />
               </FormControl>
               <Button className={classes.formButton} variant="contained" color="primary" onClick={loginData}>
                 Login   
               </Button>
             </CardContent>
-            {/* <CardActions>
-              <Button size="small" variant="contained" color="primary">
-                Log In
-              </Button>
-            </CardActions> */}
           </Card>
         </div>
       </div>

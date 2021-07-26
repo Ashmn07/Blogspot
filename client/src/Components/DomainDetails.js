@@ -119,15 +119,13 @@ const useStyles = makeStyles((theme) => ({
 
 function DomainDetails({match}) {
 
-    const classes = useStyles();
-    const user = localStorage.getItem('user');
+    const classes = useStyles()
     const [enterCode,setEnterCode] = useState(false)
     const [enterName,setEnterName] = useState(false)
     const [joinCode,setJoinCode] = useState('')
     const [roomName,setRoomName] = useState('')
     const [domainDetails,setDomainDetails] = useState([])
     const [joinAlert,setJoinAlert] = useState(false)
-    // const [invalidCode, setInvalidCode] = useState(false)
     const [joinedButton, setJoinedButton] = useState(false)
     const [docInDom,setDocInDom] = useState(false)
     const history = useHistory()
@@ -185,7 +183,6 @@ function DomainDetails({match}) {
 
     const createRoom = async(e) => {
         e.preventDefault()
-        // console.log(checkUserDomain())
         const check = await checkUserDomain()
         if(check===true){
           createDoc()
@@ -204,32 +201,13 @@ function DomainDetails({match}) {
           const check2 = await checkDocinDomain()
           if(check){
             if(check2){
-          // await fetch('/documentIds',{
-          //       method: 'put',
-          //       headers: {
-          //         "Content-Type":"application/json",
-          //         "Authorization":"Bearer "+ localStorage.getItem("jwt")
-          //       },
-          //       body:JSON.stringify({
-          //           docId:joinCode
-          //       })
-          //   })
-            // .then(res => res.json())
-            // .then(res => {
-            //   if(res){
                  history.push('/collab',{roomId: joinCode})
-              // }
-              // else{
-              //   setInvalidCode(true)
-              //   setTimeout(()=>setInvalidCode(false),2000)
-              // }
-           // })
+            }
+            else{
+              setDocInDom(true)
+              setTimeout(()=>setDocInDom(false),3000);
+            }
           }
-          else{
-            setDocInDom(true)
-            setTimeout(()=>setDocInDom(false),3000);
-          }
-        }
           else{
             setJoinAlert(true)
             setTimeout(()=>setJoinAlert(false),3000);
@@ -364,11 +342,6 @@ function DomainDetails({match}) {
           {joinAlert ? (
           <Alert severity="error">Join the domain to continue!</Alert>
         ) : null}
-        {/* {invalidCode ? (
-          <Alert severity="error">
-            The document code you entered is invalid!
-          </Alert>
-        ) : null} */}
         {docInDom ? (
           <Alert severity="error">
             This document does not exist in this domain!
