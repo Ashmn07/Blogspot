@@ -65,6 +65,9 @@ function App() {
       },
       h5:{
         fontFamily: 'Montserrat',
+      },
+      caption:{
+        fontFamily: 'Arima Madurai'
       }
       // h4:{
       //   fontFamily: '"Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", "sans-serif"'

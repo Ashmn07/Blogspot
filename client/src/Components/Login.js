@@ -186,20 +186,20 @@ function Login() {
         <div className={classes.cardContainer}>
           <Card className={classes.card}>
             <CardContent className={classes.cardContent}>
-              <Typography variant="h5" className={classes.heading}>
+              <Typography variant="caption" className={classes.heading}>
                 Login
               </Typography>
               <FormControl className={classes.formElement}>
                 {/* <InputLabel style={{color:'#35281E'}} htmlFor="my-email">Email address</InputLabel>
                 <Input className={classes.inputStyles} id="my-email" value={email} onChange={(e)=>setEmail(e.target.value)} aria-describedby="my-helper-text" /> */}
                   <CssTextField  
-                  id="email" label="Email" type="email" 
+                  id="email" label="Enter Email" type="email" 
                   value={email} onChange={(e)=>setEmail(e.target.value)}
                   aria-describedby="my-helper-text" />
               </FormControl>
               <FormControl className={classes.formElement}>
                 <CssTextField 
-                id="pass" label="Password" type="password" 
+                id="pass" label="Enter Password" type="password" 
                 value={password} onChange={(e)=>setPassword(e.target.value)}
                 aria-describedby="my-helper-text" />
               </FormControl>

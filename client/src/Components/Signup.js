@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -89,6 +89,20 @@ const useStyles = makeStyles((theme)=>({
     },
   }))
 
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: '#35281E',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#35281E',
+    },
+    '& .MuiInput-underline:before': {
+      borderBottomColor: '#35281E',
+    },
+  },
+})(TextField);
+
 function Signup() {
     const [name,setName] = useState('')
     const [password,setPassword] = useState('')
@@ -167,22 +181,25 @@ function Signup() {
             <div className={classes.cardContainer}>
             <Card className={classes.card}>
                 <CardContent className={classes.cardContent}>
-                <Typography variant="h5" className={classes.heading}>
+                <Typography variant="caption" className={classes.heading}>
                     Sign Up
                 </Typography>
                 <FormControl className={classes.formElement}>
-                    <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" value={name} onChange={(e)=>setName(e.target.value)} aria-describedby="my-helper-text" />
+                    {/* <InputLabel htmlFor="name">Enter Name</InputLabel>
+                    <Input id="name" value={name} onChange={(e)=>setName(e.target.value)} aria-describedby="my-helper-text" /> */}
+                    <CssTextField label="Enter Name" type="text" id="name" value={name} onChange={(e)=>setName(e.target.value)} aria-describedby="my-helper-text" />
                 </FormControl>
                 <FormControl className={classes.formElement}>
-                    <InputLabel htmlFor="my-email">Email address</InputLabel>
-                    <Input id="my-email" value={email} onChange={(e)=>setEmail(e.target.value)} aria-describedby="my-helper-text" />
+                    {/* <InputLabel htmlFor="my-email">Enter Email address</InputLabel>
+                    <Input id="my-email" value={email} onChange={(e)=>setEmail(e.target.value)} aria-describedby="my-helper-text" /> */}
+                    <CssTextField label="Enter Email" type="email" id="my-email" value={email} onChange={(e)=>setEmail(e.target.value)} aria-describedby="my-helper-text"/>
                 </FormControl>
                 <FormControl className={classes.formElement}>
-                    <TextField id="pass" label="Password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} aria-describedby="my-helper-text" />
+                    {/* <TextField id="pass" label="Enter Password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} aria-describedby="my-helper-text" /> */}
+                    <CssTextField label="Enter Password" type="password" id="pass" value={password} onChange={(e)=>setPassword(e.target.value)} aria-describedby="my-helper-text"/>
                 </FormControl>
                 <Button className={classes.formButton} variant="contained" color="primary" onClick={submitData}>
-                    Sign-Up   
+                    Sign Up   
                 </Button>
                 </CardContent>
             </Card>
