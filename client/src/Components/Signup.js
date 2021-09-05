@@ -120,6 +120,7 @@ function Signup() {
       if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
         setShowAlert(true)
         setError("Enter a valid Email")
+        setTimeout(()=>setShowAlert(false),2000);
         return;
       }
       e.preventDefault()
