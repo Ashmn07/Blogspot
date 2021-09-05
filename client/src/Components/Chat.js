@@ -49,36 +49,6 @@ function Chat({id}) {
 
     const display = (message,user) => {
       setTemp((temp)=>[...temp,{user,message}])
-      // t.push({user,message})
-      // console.log(t)
-        // const mes = document.createElement("div")
-        // const nameDiv = document.createElement("div")
-        // nameDiv.textContent = user.name
-        // mes.style.padding = '7px 10px'
-        // mes.style.margin = "5px 15px 15px 15px"
-        // nameDiv.style.margin = "15px 15px 0 15px"
-        // mes.style.maxWidth="50%"
-        // nameDiv.style.fontWeight="bold"
-        // mes.style.width="max-content"
-        // mes.style.height="auto"
-        // mes.style.wordWrap="break-word"
-        // nameDiv.style.wordWrap="break-word"
-        // if(user._id !== JSON.parse(localStorage.getItem("user"))._id){
-        //     mes.style.backgroundColor="#141414"
-        //     mes.style.color = "white"
-        //     mes.style.alignSelf="flex-start"
-        //     nameDiv.style.alignSelf="flex-start"
-        // }
-        // else{
-        //     mes.style.backgroundColor="white"
-        //     mes.style.color = "#141414"  
-        //     mes.style.alignSelf="flex-end" 
-        //     nameDiv.style.alignSelf="flex-end" 
-        // }
-        // mes.style.borderRadius = "10px"
-        // mes.textContent=message
-        // document.querySelector(".messages").append(nameDiv)
-        // document.querySelector(".messages").append(mes)
         const chCont = document.querySelector(".message-container")
         const ch = chCont.scrollHeight
         chCont.scroll(0,ch)

@@ -129,6 +129,11 @@ function Login() {
   const history = useHistory()
 
   const loginData = (e) => {
+    if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+      setShowAlert(true)
+      setError("Enter a valid Email")
+      return;
+    }
     e.preventDefault()
     fetch("/login",{
       method:"post",
