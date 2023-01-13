@@ -29,7 +29,7 @@ function TextEditor({id,name}) {
   const [quill, setQuill] = useState()
 
   // const ENDPOINT = "https://blogspot1.herokuapp.com/"
-  const ENDPOINT = "https://blogspot1.herokuapp.com/"
+  const ENDPOINT = "https://blogspot-backend.onrender.com/"
 
   //setting socket to url value of backend socket server
   useEffect(() =>{
