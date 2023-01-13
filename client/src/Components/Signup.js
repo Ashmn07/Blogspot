@@ -124,7 +124,7 @@ function Signup() {
         return;
       }
       e.preventDefault()
-      fetch("/signup",{
+      fetch("/api/signup",{
         method:"post",
         headers:{
             "Content-Type":"application/json"

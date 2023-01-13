@@ -136,7 +136,7 @@ function Login() {
       return;
     }
     e.preventDefault()
-    fetch("/login",{
+    fetch("/api/login",{
       method:"post",
       headers:{
           "Content-Type":"application/json"

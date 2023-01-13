@@ -9,7 +9,7 @@ function Collab({location}) {
     }, [])
     async function check() {
         const jwtToken = localStorage.getItem("jwt")
-        const res = await fetch('/documents',{
+        const res = await fetch('/api/documents',{
           method: 'get',
           headers: {
             "Content-Type":"application/json",
@@ -30,7 +30,7 @@ function Collab({location}) {
         }
     }
     async function join(){
-        const joinRoom = await fetch('/api/joinDoc',{
+        const joinRoom = await fetch('/api/api/joinDoc',{
             method: 'put',
             headers: {
               "Content-Type":"application/json",

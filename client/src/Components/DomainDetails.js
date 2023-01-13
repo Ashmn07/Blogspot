@@ -136,7 +136,7 @@ function DomainDetails({match}) {
   }
 
     const addDoctoDomain = async() => {
-      const res = await fetch('/addDoctoDomain',{
+      const res = await fetch('/api/addDoctoDomain',{
           method: 'put',
           headers: {
             "Content-Type":"application/json",
@@ -151,7 +151,7 @@ function DomainDetails({match}) {
     }
 
     const checkDocinDomain = async() => {
-      const res = await fetch('/checkDocinDomain',{
+      const res = await fetch('/api/checkDocinDomain',{
         method: 'put',
         headers: {
           "Content-Type":"application/json",
@@ -166,7 +166,7 @@ function DomainDetails({match}) {
       return ans;
     }
     const createDoc = async() => {
-      const res = await fetch('/createDoc',{
+      const res = await fetch('/api/createDoc',{
         method: 'post',
         headers: {
           "Content-Type":"application/json",
@@ -222,7 +222,7 @@ function DomainDetails({match}) {
       temp.users.push(JSON.parse(localStorage.getItem("user")))
       setDomainDetails(temp)
       const jwtToken = localStorage.getItem("jwt");
-      fetch("/api/join", {
+      fetch("/api/api/join", {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -235,7 +235,7 @@ function DomainDetails({match}) {
     }
 
     const fetchDomainDetails = async () => {
-      const result = await fetch("/domainDetails", {
+      const result = await fetch("/api/domainDetails", {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -250,7 +250,7 @@ function DomainDetails({match}) {
     };
 
     const checkUserDomain = async() => {
-      const res = await fetch('/userDomains',{
+      const res = await fetch('/api/userDomains',{
         method: 'GET',
         headers:{
           "Content-Type":"application/json",

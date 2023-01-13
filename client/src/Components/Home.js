@@ -125,7 +125,7 @@ function Home() {
 
   const fetchUserDomains = async() => {
     const jwtToken = localStorage.getItem("jwt")
-    const res = await fetch('/userDomainsDetails',{
+    const res = await fetch('/api/userDomainsDetails',{
       method: 'get',
       headers: {
         "Content-Type":"application/json",

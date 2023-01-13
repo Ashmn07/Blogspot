@@ -14,7 +14,7 @@ function Chat({id}) {
     const [socket, setSocket] = useState();
     const [temp,setTemp] = useState([])
 
-    const ENDPOINT = "https://blogspot1.herokuapp.com/"
+    const ENDPOINT = "https://blogspot-backend.onrender.com"
 
     useEffect(() =>{
         const s = io(ENDPOINT,{ transports: ['websocket'] })

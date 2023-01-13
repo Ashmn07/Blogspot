@@ -92,7 +92,7 @@ function Documents() {
     }, [])
     async function getDomains() {
         const jwtToken = localStorage.getItem("jwt")
-        const res = await fetch('/documents',{
+        const res = await fetch('/api/documents',{
           method: 'get',
           headers: {
             "Content-Type":"application/json",

@@ -99,7 +99,7 @@ export default function Domains() {
   },[])
 
   const fetchUserDomains = async() => {
-    const res = await fetch('/userDomains',{
+    const res = await fetch('/api/userDomains',{
       method:'get',
       headers: {
         "Content-Type":"application/json",
@@ -113,7 +113,7 @@ export default function Domains() {
 
   const fetchDomains = async() => {
     const jwtToken = localStorage.getItem("jwt")
-    const res = await fetch('/allDomains',{
+    const res = await fetch('/api/allDomains',{
       method: 'get',
       headers: {
         "Content-Type":"application/json",
@@ -127,7 +127,7 @@ export default function Domains() {
   async function joinDomain(d) {
     setUserDomains([...userDomains,d._id])
     const jwtToken = localStorage.getItem("jwt")
-    const res = await fetch('/api/join',{
+    const res = await fetch('/api/api/join',{
       method: 'put',
       headers: {
         "Content-Type":"application/json",
